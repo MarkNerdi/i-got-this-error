@@ -1,6 +1,5 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import logo from '$lib/assets/images/logo.svg';
 </script>
 
 <main class="error-page flex-center">
