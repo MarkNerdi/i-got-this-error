@@ -1,11 +1,11 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import Button from '$lib/components/ui/button/button.svelte';
-    import { ThemeSwitcher } from '$lib/components/ui/theme-switcher';
+    import { Input } from '$lib/components/ui/input';
     import { activeUser } from '$lib/stores/user.store';
     import { signOut } from '@auth/sveltekit/client';
 
-    const appName = '<i-got-this-error/>';
+    const appName = '<i-got-this-error />';
 
 </script>
 
@@ -16,12 +16,13 @@
                 <h2 class="text-3xl">{appName}</h2>
             </a>
             <div class="flex items-center gap-4">
+                <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
                 <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
                 <Button on:click={() => goto('/about')} variant="link">About</Button>
             </div>
         </div>
         <div class="flex justify-between items-center gap-4">
-            <ThemeSwitcher />
+            <Input placeholder="Search other devs" />
             {#if !$activeUser}
                 <Button on:click={() => goto('/auth/signin')}>Sign in</Button>
             {:else}
@@ -30,7 +31,7 @@
         </div>
     </header>
 
-    <main class="p-5">
+    <main class="p-5 overflow-hidden">
         <slot />
     </main>
 </div>

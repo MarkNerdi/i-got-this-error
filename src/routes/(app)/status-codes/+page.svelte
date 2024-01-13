@@ -23,7 +23,7 @@
         <h2 class="text-3xl font-bold">Status codes</h2>
         
         <div class="flex gap-4 items-center">
-            <p class="text-sm">Display only:</p>
+            <p class="text-sm">Filter:</p>
             <ToggleGroup type="multiple" bind:value={selectedStatusCodes}>
                 <ToggleGroupItem value="1xx" aria-label="1xx">
                     1xx
@@ -69,6 +69,7 @@
 
     list-container {
         @apply w-full flex-grow flex flex-col gap-8;
+        @apply overflow-auto;
     }
 
     status-code-list {
