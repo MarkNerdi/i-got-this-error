@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Card from '$lib/components/ui/card/card.svelte';
+    import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { ToggleGroup, ToggleGroupItem } from '$lib/components/ui/toggle-group';
 
     export let data;
@@ -35,10 +35,7 @@
 
     <status-code-list>
         {#each data.statusCodes as statusCode}
-            <Card class="flex flex-col items-center p-6 hover:bg-secondary cursor-pointer" on:click={() => console.log(statusCode)} >
-                <h3 class="text-2xl">{statusCode.code}</h3>
-                <p class="text-sm">{statusCode.title}</p>
-            </Card>
+            <StatusCodeCard {statusCode} />
         {/each}
     </status-code-list>
 </status-codes-view>
