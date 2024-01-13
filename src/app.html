@@ -4,8 +4,26 @@
     <head>
         <meta charset="utf-8" />
         <title>i-got-this-error</title>
-        <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+        <link rel="icon" href="%sveltekit.assets%/logo-light.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+        <script>
+            const faviconEl = document.querySelector('link[rel="icon"]')
+
+            // watch for changes 🕵️
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+            mediaQuery.addEventListener('change', themeChange)
+
+            themeChange(mediaQuery)
+            // listener 👂
+            function themeChange(event) {
+                if (event.matches) {
+                    faviconEl.setAttribute('href', '%sveltekit.assets%/logo-dark.svg')
+                } else {
+                    faviconEl.setAttribute('href', '%sveltekit.assets%/logo-light.svg')
+                }
+            }
+        </script>
         %sveltekit.head%
     </head>
 
