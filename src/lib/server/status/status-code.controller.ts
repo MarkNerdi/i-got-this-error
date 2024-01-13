@@ -16,6 +16,15 @@ async function create(code: string, title: string, rfc: string): Promise<StatusC
 }
 
 
+async function getAll(): Promise<StatusCode[]> {
+    const statusCode = await statusCodeCollection.find().toArray();
+    const serializedStatusCodes = statusCode.map((statusCode) => {
+        statusCode._id = String(statusCode._id);
+        return statusCode;
+    });
+    return serializedStatusCodes;
+}
+
 async function getById(code: string): Promise<StatusCode | null> {
     const statusCode = await statusCodeCollection.findOne({ code });
     if (statusCode) {
@@ -31,5 +40,6 @@ async function update(code: string, statusCode: Partial<StatusCode>): Promise<Up
 export const statusCodeController = {
     create,
     update,
+    getAll,
     getById,
 };
