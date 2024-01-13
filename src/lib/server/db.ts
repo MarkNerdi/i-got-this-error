@@ -7,4 +7,4 @@ export const db = client.db();
 
 export const mongoClient = client.connect();
 
-export const statusCodeCollection = db.collection<StatusCode>('StatusCode');
+export const statusCodeCollection = db.collection<StatusCode>('status-codes');

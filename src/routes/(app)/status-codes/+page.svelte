@@ -1,12 +1,20 @@
 <script lang="ts">
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
+    import { Input } from '$lib/components/ui/input/index.js';
     import { ToggleGroup, ToggleGroupItem } from '$lib/components/ui/toggle-group';
     import type { StatusCode } from '$lib/server/status/status-code.type.js';
 
     export let data;
 
+    let selectedStatusCodes = ['4xx', '5xx'];
+    let searchTerm = '';
+
     let groupedStatusCodes: Record<string, StatusCode[]> = {};
     $: groupedStatusCodes = data.statusCodes.reduce((acc, statusCode) => {
+        if (!isVisible(statusCode, searchTerm)) {
+            return acc;
+        }
+
         const statusCodeGroup = statusCode.code[0] + 'xx';
         if (!acc[statusCodeGroup]) {
             acc[statusCodeGroup] = [];
@@ -15,7 +23,13 @@
         return acc;
     }, {} as Record<string, StatusCode[]>);
 
-    let selectedStatusCodes = ['4xx', '5xx'];
+    function isVisible(statusCode: StatusCode,searchTerm: string) {
+        if (!searchTerm) {
+            return true;
+        }
+
+        return statusCode.code.toLowerCase().includes(searchTerm.toLowerCase()) || statusCode.title.toLowerCase().includes(searchTerm.toLowerCase());
+    }
 </script>
 
 <status-codes-view>
@@ -23,6 +37,7 @@
         <h2 class="text-3xl font-bold">Status codes</h2>
         
         <div class="flex gap-4 items-center">
+            <Input placeholder="Search status codes" bind:value={searchTerm} />
             <p class="text-sm">Filter:</p>
             <ToggleGroup type="multiple" bind:value={selectedStatusCodes}>
                 <ToggleGroupItem value="1xx" aria-label="1xx">
