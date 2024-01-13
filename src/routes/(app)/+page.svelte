@@ -12,9 +12,6 @@
         <h2 class="text-2xl">You're not logged in. To continue, please first create an account or log in</h2>
         <Button on:click={() => goto('/auth/signin')}>Sign in</Button>
     {/if}
-    <form method="POST">
-        <button>dadas</button>
-    </form>
 </home-view>
 
 <style lang="postcss">

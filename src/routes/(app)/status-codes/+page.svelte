@@ -11,11 +11,15 @@
 
     let groupedStatusCodes: Record<string, StatusCode[]> = {};
     $: groupedStatusCodes = data.statusCodes.reduce((acc, statusCode) => {
-        if (!isVisible(statusCode, searchTerm)) {
+        if (!isVisibleStatusCode(statusCode, searchTerm)) {
             return acc;
         }
 
         const statusCodeGroup = statusCode.code[0] + 'xx';
+        if (!isVisibleGroup(statusCodeGroup, selectedStatusCodes)) {
+            return acc;
+        }
+
         if (!acc[statusCodeGroup]) {
             acc[statusCodeGroup] = [];
         }
@@ -23,7 +27,11 @@
         return acc;
     }, {} as Record<string, StatusCode[]>);
 
-    function isVisible(statusCode: StatusCode,searchTerm: string) {
+    function isVisibleGroup(statusCodeGroup: string, selectedStatusCodes: string[]) {
+        return selectedStatusCodes.includes(statusCodeGroup);
+    }
+
+    function isVisibleStatusCode(statusCode: StatusCode, searchTerm: string) {
         if (!searchTerm) {
             return true;
         }
@@ -61,16 +69,14 @@
 
     <list-container>
         {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
-            {#if selectedStatusCodes.includes(statusCodesGroupKey)}
-                <div class="flex flex-col items-start gap-4">
-                    <h3 class="text-2xl">{statusCodesGroupKey}</h3>
-                    <status-code-list>
-                        {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                            <StatusCodeCard {statusCode} />
-                        {/each}
-                    </status-code-list>
-                </div>
-            {/if}
+            <div class="flex flex-col items-start gap-4">
+                <h3 class="text-2xl">{statusCodesGroupKey}</h3>
+                <status-code-list>
+                    {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
+                        <StatusCodeCard {statusCode} />
+                    {/each}
+                </status-code-list>
+            </div>
         {/each}
     </list-container>
 </status-codes-view>

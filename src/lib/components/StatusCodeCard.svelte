@@ -11,7 +11,7 @@
 
 <Dialog.Root>
     <Dialog.Trigger >
-        <Card class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer h-full gap-2" on:click={() => console.log(statusCode)} >
+        <Card class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer h-full gap-2">
             <h3 class="text-2xl">{statusCode.code}</h3>
             <p class="text-sm text-muted-foreground">{statusCode.title}</p>
         </Card>
