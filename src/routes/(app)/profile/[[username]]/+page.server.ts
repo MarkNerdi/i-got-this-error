@@ -1,9 +1,23 @@
-import { statusCodeController } from '$lib/server/status/status-code.controller';
+import { userCollection } from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-    const achievedStatusCodes = await statusCodeController.getAll();
-    const newestStatusCodes = achievedStatusCodes.slice(0, 5);
+export const load: PageServerLoad = async ({ params, locals }) => {
+    let username = params?.username ;
+    if (!username) {
+        const session = await locals.getSession();
+        username = session?.user?.username;
+    }
 
-    return { achievedStatusCodes, newestStatusCodes };
+    const user = await userCollection.findOne({ username });
+    if (!user) {
+        return { status: 404 };
+    }
+
+    const serializedUser = {
+        profileUrl: user.profileUrl,
+        username: user.username,
+        image: user.image, 
+        receivedCodes: user.receivedCodes ?? [],
+    };
+    return { user: serializedUser };
 };

@@ -50,13 +50,14 @@ export const handle = SvelteKitAuth({
                     profileUrl: profile.html_url,
                     username: profile.login,
                     image: profile.avatar_url,
+                    receivedCodes: [],
                 };
             },
         }),
     ],
     callbacks: {
         async session({ session, user }) {
-            return { ...session, user };
+            return { ...session, user: { ...user, receivedCode: undefined } };
         },
     },
     adapter: MongoDBAdapter(mongoClient, { databaseName: PRIVATE_DB_NAME }),

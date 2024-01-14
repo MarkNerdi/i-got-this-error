@@ -2,11 +2,15 @@
     import { Card } from '$lib/components/ui/card';
     import type { StatusCode } from '$lib/server/status/status-code.type.js';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
+    import Button from '$lib/components/ui/button/button.svelte';
 
     export let data;
 
+    console.log(data.user);
+    
+
     let groupedStatusCodes: Record<string, StatusCode[]> = {};
-    $: groupedStatusCodes = data.achievedStatusCodes.reduce((acc, statusCode) => {
+    $: groupedStatusCodes = data.user?.receivedCodes.reduce((acc, statusCode) => {
         const statusCodeGroup = statusCode.code[0] + 'xx';
 
         if (!acc[statusCodeGroup]) {
@@ -32,37 +36,48 @@
             </Card>
         </div>
         <div class="flex flex-col gap-4">
-            <h3 class="text-xl">Max Mustermann</h3>
-            <p class="text-sm">Go to github</p>
+            <h3 class="text-2xl font-bold">{data.user?.username}</h3>
+            <Button
+                variant="secondary"
+                on:click={() => window.open(data.user?.profileUrl ?? '', '_blank', 'noopener, noreferrer')}
+            >
+                Go to github
+            </Button>
         </div>
     </progress-section>
 
     <div class="w-full overflow-auto flex flex-col gap-12">
-        <status-codes-section>
-            <h2 class="text-2xl font-bold">Newest Achievements</h2>
+        {#if data.user?.receivedCodes?.length}
+            <status-codes-section>
+                <h2 class="text-2xl font-bold">Newest Achievements</h2>
 
-            <status-code-list>
-                {#each data.newestStatusCodes as statusCode}
-                    <StatusCodeCard {statusCode} />
-                {/each}
-            </status-code-list>
-        </status-codes-section>
+                <status-code-list>
+                    {#each [] as statusCode}
+                        <StatusCodeCard {statusCode} />
+                    {/each}
+                </status-code-list>
+            </status-codes-section>
+        {/if}
 
         <status-codes-section>
             <h2 class="text-2xl font-bold">All Achievements</h2>
 
-            <list-container>
-                {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
-                    <div class="flex flex-col items-start gap-4">
-                        <h3 class="text-2xl">{statusCodesGroupKey}</h3>
-                        <status-code-list>
-                            {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                                <StatusCodeCard {statusCode} />
-                            {/each}
-                        </status-code-list>
-                    </div>
-                {/each}
-            </list-container>
+            {#if data.user?.receivedCodes?.length}
+                <list-container>
+                    {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
+                        <div class="flex flex-col items-start gap-4">
+                            <h3 class="text-2xl">{statusCodesGroupKey}</h3>
+                            <status-code-list>
+                                {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
+                                    <StatusCodeCard {statusCode} />
+                                {/each}
+                            </status-code-list>
+                        </div>
+                    {/each}
+                </list-container>
+            {:else}
+                empty
+            {/if}
         </status-codes-section>
     </div>
 </profile-view>
