@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import LoginButton from '$lib/components/LoginButton.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
     import { activeUser } from '$lib/stores/user.store';
@@ -24,7 +25,7 @@
         <div class="flex justify-between items-center gap-4">
             <Input placeholder="Search other devs" />
             {#if !$activeUser}
-                <Button on:click={() => goto('/auth/signin')}>Sign in</Button>
+                <LoginButton />
             {:else}
                 <Button variant="secondary" on:click={() => signOut()}>Logout</Button>
             {/if}

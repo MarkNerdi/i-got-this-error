@@ -1,54 +1,62 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
-import GoogleProvider from '@auth/core/providers/google';
-import EmailProvider from '@auth/core/providers/email';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import {
-    GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET,
+    GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET,
     PRIVATE_DB_NAME,
-    AUTH_SECRET,
-    PRIVATE_EMAIL_SERVER_HOST,
-    PRIVATE_EMAIL_SERVER_PORT,
-    PRIVATE_EMAIL_SERVER_USER,
-    PRIVATE_EMAIL_SERVER_PASSWORD,
-    PRIVATE_EMAIL_FROM
+    AUTH_SECRET
 } from '$env/static/private';
 import { mongoClient } from '$lib/server/db';
+import GitHub, { type GitHubEmail } from '@auth/core/providers/github';
 
 export const handle = SvelteKitAuth({
     providers: [
-        EmailProvider({
-            server: {
-                host: PRIVATE_EMAIL_SERVER_HOST,
-                port: PRIVATE_EMAIL_SERVER_PORT,
-                auth: {
-                    user: PRIVATE_EMAIL_SERVER_USER,
-                    pass: PRIVATE_EMAIL_SERVER_PASSWORD,
+        GitHub({
+            clientId: GITHUB_CLIENT_ID,
+            clientSecret: GITHUB_CLIENT_SECRET,
+            userinfo: {
+                url: 'https://api.github.com/user',
+                async request({ tokens, provider }) {
+                    const profile = await fetch(provider.userinfo?.url as URL, {
+                        headers: {
+                            Authorization: `Bearer ${tokens.access_token}`,
+                            'User-Agent': 'authjs',
+                        },
+                    }).then(async (res) => await res.json());
+
+                    if (!profile.email) {
+                        // If the user does not have a public email, get another via the GitHub API
+                        // See https://docs.github.com/en/rest/users/emails#list-public-email-addresses-for-the-authenticated-user
+                        const res = await fetch('https://api.github.com/user/emails', {
+                            headers: {
+                                Authorization: `Bearer ${tokens.access_token}`,
+                                'User-Agent': 'authjs',
+                            },
+                        });
+
+                        if (res.ok) {
+                            const emails: GitHubEmail[] = await res.json();
+                            profile.email = (emails.find((e) => e.primary) ?? emails[0]).email;
+                        }
+                    }
+
+                    return profile;
                 },
             },
-            from: PRIVATE_EMAIL_FROM,
-        }),
-        GoogleProvider({
-            clientId: GOOGLE_CLIENT_ID,
-            clientSecret: GOOGLE_CLIENT_SECRET,
             profile(profile) {
-                const defaultUserName = profile.email.split('@')[0];
-
                 return {
-                    id: profile.id,
-                    name: profile.name,
+                    id: profile.id.toString(),
                     email: profile.email,
-                    username: defaultUserName,
-                    createdAt: Date.now(),
+                    profileUrl: profile.html_url,
+                    username: profile.login,
+                    image: profile.avatar_url,
                 };
             },
         }),
     ],
     callbacks: {
         async session({ session, user }) {
-            session.user = user;
-            
-            return session;
+            return { ...session, user };
         },
     },
     adapter: MongoDBAdapter(mongoClient, { databaseName: PRIVATE_DB_NAME }),

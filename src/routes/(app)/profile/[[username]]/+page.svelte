@@ -24,9 +24,11 @@
 
     <progress-section >
         <div class="flex flex-col items-center gap-4">
-            <Card class="w-[120px] h-[120px] flex flex-col gap-1 items-center justify-center p-6 border-2 rounded-full">
-                <h4 class="text-4xl font-bold">32</h4>
-                <p class="text-xs rounded-full">32/52</p>
+            <Card class="w-[120px] h-[120px] flex items-center justify-center  p-6 border-2 rounded-full">
+                <div class="flex gap-1 items-end justify-center">
+                    <h4 class="text-4xl font-bold">32</h4>
+                    <p class="text-xs rounded-full text-muted-foreground pb-1">/52</p>
+                </div>
             </Card>
         </div>
         <div class="flex flex-col gap-4">
