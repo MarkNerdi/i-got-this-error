@@ -1,8 +1,8 @@
 import { userCollection } from '$lib/server/db.js';
 import { statusCodeController } from '$lib/server/status/status-code.controller';
-import { ObjectId } from 'mongodb';
 import type { PageServerLoad } from './$types';
 import type { ReceivedCode } from '$lib/server/users/users.types';
+import { userController } from '$lib/server/users/users.controller';
 
 export const load: PageServerLoad = async () => {
     const statusCodes = await statusCodeController.getAll();
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async () => {
 export const actions = {
     default: async ({ locals, request }) => {
         const session = await locals.getSession();
-        const user = session?.user?.id ? await userCollection.findOne({ _id: new ObjectId(session?.user?.id) }) : undefined;
+        const user = session?.user?.id ? await userController.getById(session.user.id) : undefined;
         if (!user) {
             return { status: 403 };
         }

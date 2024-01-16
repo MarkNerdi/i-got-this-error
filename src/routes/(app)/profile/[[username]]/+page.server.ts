@@ -1,4 +1,5 @@
-import { userCollection } from '$lib/server/db';
+import { userController } from '$lib/server/users/users.controller';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
@@ -7,8 +8,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         const session = await locals.getSession();
         username = session?.user?.username;
     }
+    if (!username) {
+        return redirect(300, '/');
+    }
 
-    const user = await userCollection.findOne({ username });
+    const user = await userController.getByUsername(username);
     if (!user) {
         return { status: 404 };
     }

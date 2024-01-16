@@ -23,7 +23,9 @@
             </div>
         </div>
         <div class="flex justify-between items-center gap-4">
-            <Input placeholder="Search other devs" />
+            <form action="/devs"  >
+                <Input placeholder="Search other devs" name="search" required />
+            </form>
             {#if !$activeUser}
                 <LoginButton />
             {:else}
