@@ -19,6 +19,9 @@
         acc[statusCodeGroup].push(statusCode);
         return acc;
     }, {} as Record<string, StatusCode[]>);
+
+    let newestStatusCodes: StatusCode[] = [];
+    $: newestStatusCodes = data.user?.receivedCodes.sort((a, b) => b.receivedAt - a.receivedAt).slice(0, 5) ?? [];
 </script>
 
 <profile-view>
@@ -52,7 +55,7 @@
                 <h2 class="text-2xl font-bold">Newest Achievements</h2>
 
                 <status-code-list>
-                    {#each [] as statusCode}
+                    {#each newestStatusCodes as statusCode}
                         <StatusCodeCard {statusCode} />
                     {/each}
                 </status-code-list>

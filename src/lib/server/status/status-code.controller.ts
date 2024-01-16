@@ -25,7 +25,7 @@ async function getAll(): Promise<StatusCode[]> {
     return serializedStatusCodes;
 }
 
-async function getById(code: string): Promise<StatusCode | null> {
+async function getByCode(code: string): Promise<StatusCode | null> {
     const statusCode = await statusCodeCollection.findOne({ code });
     if (statusCode) {
         statusCode.code = String(statusCode.code);
@@ -41,5 +41,5 @@ export const statusCodeController = {
     create,
     update,
     getAll,
-    getById,
+    getByCode,
 };
