@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
+    import { Card } from '$lib/components/ui/card/index.js';
+
     export let data;
 </script>
 
@@ -9,10 +12,10 @@
 
     <user-list>
         {#each data.users as user}
-            <div class="flex flex-col items-center justify-center gap-4">
+            <Card on:click={() => goto(`/profile/${user.username}`)} class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer gap-2">
                 <img src={user.image} alt={user.username} class="w-24 h-24 rounded-full" />
                 <p class="text-center">{user.username}</p>
-            </div>
+            </Card>
         {/each}
     </user-list>
 </users-view>
