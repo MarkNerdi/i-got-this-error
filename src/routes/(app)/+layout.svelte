@@ -5,6 +5,7 @@
     import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
     import { activeUser } from '$lib/stores/user.store';
+    import { goToExternalLink } from '$lib/utils/general';
     import { ExternalLink } from 'lucide-svelte';
 
     const appName = '<i-got-this-error />';
@@ -22,7 +23,7 @@
                     <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
                 {/if}
                 <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
-                <Button on:click={() => window.open('https://github.com/MarkNerdi/i-got-this-error', '_blank', 'noopener, noreferrer')} variant="link">
+                <Button on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')} variant="link">
                     Contribute!
                     <ExternalLink class="w-4 h-4 ml-1" />
                 </Button>

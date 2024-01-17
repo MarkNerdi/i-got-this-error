@@ -9,3 +9,7 @@ export async function share(title: string, link: string = window.location.href) 
         });
     }
 }
+
+export function goToExternalLink(link: string) {
+    window.open(link, '_blank', 'noopener, noreferrer');
+}

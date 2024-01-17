@@ -4,6 +4,7 @@
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { activeUser } from '$lib/stores/user.store.js';
+    import { goToExternalLink } from '$lib/utils/general.js';
 
     export let data;
 
@@ -27,13 +28,11 @@
 
 <profile-view>
     <div class="w-full flex flex-row justify-between align-center">
-        <h2 class="text-3xl font-bold">
-            {
-                data.user?.username === $activeUser?.username
-                    ? 'Your Profile'
-                    : `${data.user?.username}'s Profile`
-            }
-        </h2>
+        <h2 class="text-3xl font-bold">{
+            data.user?.username === $activeUser?.username
+                ? 'Your Profile'
+                : `${data.user?.username}'s Profile`
+        }</h2>
     </div>
 
     <progress-section >
@@ -49,7 +48,7 @@
             <h3 class="text-2xl font-bold">{data.user?.username}</h3>
             <Button
                 variant="secondary"
-                on:click={() => window.open(data.user?.profileUrl ?? '', '_blank', 'noopener, noreferrer')}
+                on:click={() => goToExternalLink(data.user?.profileUrl)}
             >
                 Go to github
             </Button>
