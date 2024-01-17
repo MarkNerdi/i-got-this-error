@@ -1,7 +1,7 @@
-import type { User as AuthUser } from '@auth/core/types';
+import type { ObjectId } from 'mongodb';
 
-export type User = AuthUser | {
-    id?: string
+export type UserModel = {
+    _id?: string
     name?: string | null
     email?: string | null
 
@@ -10,6 +10,9 @@ export type User = AuthUser | {
     image: string;
 
     receivedCodes: ReceivedCode[]
+
+    followers: ObjectId[];
+    followings: ObjectId[];
 
     createdAt: number;
 };

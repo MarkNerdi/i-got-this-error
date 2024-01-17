@@ -8,8 +8,10 @@ export const load: PageServerLoad = async ({ url }) => {
     const serializedUsers = users.map((user) => 
         ({
             username: user.username,
+            email: undefined,
             image: user.image, 
-            level: user.receivedCodes?.length ?? [],
+            followings: undefined,
+            followers: undefined,
         })
     );
 

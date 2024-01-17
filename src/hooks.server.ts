@@ -45,7 +45,7 @@ export const handle = SvelteKitAuth({
             },
             profile(profile) {
                 return {
-                    id: profile.id.toString(),
+                    _id: profile.id.toString(),
                     email: profile.email,
                     profileUrl: profile.html_url,
                     username: profile.login,
@@ -57,7 +57,7 @@ export const handle = SvelteKitAuth({
     ],
     callbacks: {
         async session({ session, user }) {
-            return { ...session, user: { ...user, receivedCode: undefined } };
+            return { ...session, user: { ...user, _id: user.id } };
         },
     },
     adapter: MongoDBAdapter(mongoClient, { databaseName: PRIVATE_DB_NAME }),

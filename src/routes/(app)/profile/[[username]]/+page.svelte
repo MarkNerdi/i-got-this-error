@@ -1,17 +1,16 @@
 <script lang="ts">
     import { Card } from '$lib/components/ui/card';
-    import type { StatusCode } from '$lib/server/status/status-code.type.js';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { activeUser } from '$lib/stores/user.store.js';
     import { goToExternalLink } from '$lib/utils/general.js';
+    import { ExternalLink, ThumbsUp } from 'lucide-svelte';
+    import type { ReceivedCode } from '$lib/server/users/users.types.js';
+    import { enhance } from '$app/forms';
 
     export let data;
 
-    console.log(data.user);
-    
-
-    let groupedStatusCodes: Record<string, StatusCode[]> = {};
+    let groupedStatusCodes: Record<string, ReceivedCode[]> = {};
     $: groupedStatusCodes = data.user?.receivedCodes.reduce((acc, statusCode) => {
         const statusCodeGroup = statusCode.code[0] + 'xx';
 
@@ -20,9 +19,9 @@
         }
         acc[statusCodeGroup].push(statusCode);
         return acc;
-    }, {} as Record<string, StatusCode[]>);
+    }, {} as Record<string, ReceivedCode[]>) ?? {};
 
-    let newestStatusCodes: StatusCode[] = [];
+    let newestStatusCodes: ReceivedCode[] = [];
     $: newestStatusCodes = data.user?.receivedCodes.sort((a, b) => b.receivedAt - a.receivedAt).slice(0, 5) ?? [];
 </script>
 
@@ -33,6 +32,21 @@
                 ? 'Your Profile'
                 : `${data.user?.username}'s Profile`
         }</h2>
+        <form method="POST" action="?/toggleFollow" use:enhance>
+            <input type="hidden" name="username" value={data.user?.username} />
+            <input type="hidden" name="follow" value={!data.user?.isFollowed} />
+
+            {#if data.user?.isFollowed}
+                <Button variant="outline" type="submit">
+                    Unfollow
+                </Button>
+            {:else}
+                <Button variant="secondary" type="submit">
+                    <ThumbsUp class="w-4 h-4 mr-3" />
+                    Follow
+                </Button>
+            {/if}
+        </form>
     </div>
 
     <progress-section >
@@ -45,13 +59,12 @@
             </Card>
         </div>
         <div class="flex flex-col gap-4">
-            <h3 class="text-2xl font-bold">{data.user?.username}</h3>
-            <Button
-                variant="secondary"
-                on:click={() => goToExternalLink(data.user?.profileUrl)}
-            >
-                Go to github
-            </Button>
+            <div class="flex flex-row items-center gap-2">
+                <Button on:click={() => goToExternalLink(data.user?.profileUrl ?? '')} variant="link">
+                    <h3 class="text-2xl font-bold">{data.user?.username}</h3>
+                    <ExternalLink class="w-4 h-4 ml-1" />
+                </Button>
+            </div>
         </div>
     </progress-section>
 
@@ -99,7 +112,7 @@
     }
 
     progress-section {
-        @apply w-full flex flex-row items-center justify-center gap-12 p-16;
+        @apply w-full flex flex-row items-center justify-center gap-4 p-16;
     }
 
     status-codes-section {

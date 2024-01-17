@@ -7,8 +7,9 @@
     import { Card } from './ui/card';
     import { activeUser } from '$lib/stores/user.store';
     import LoginButton from '$lib/components/LoginButton.svelte';
+    import type { ReceivedCode } from '$lib/server/users/users.types';
 
-    export let statusCode: StatusCode;
+    export let statusCode: StatusCode | ReceivedCode;
 
 </script>
 
