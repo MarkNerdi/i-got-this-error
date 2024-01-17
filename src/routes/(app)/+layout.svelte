@@ -1,10 +1,10 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import LoginButton from '$lib/components/LoginButton.svelte';
+    import UserNav from '$lib/components/UserNav.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
     import { activeUser } from '$lib/stores/user.store';
-    import { signOut } from '@auth/sveltekit/client';
     import { ExternalLink } from 'lucide-svelte';
 
     const appName = '<i-got-this-error />';
@@ -35,7 +35,7 @@
             {#if !$activeUser}
                 <LoginButton />
             {:else}
-                <Button variant="secondary" on:click={() => signOut()}>Logout</Button>
+                <UserNav user={$activeUser}/>
             {/if}
         </div>
     </header>
