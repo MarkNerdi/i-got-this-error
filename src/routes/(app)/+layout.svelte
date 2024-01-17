@@ -17,7 +17,9 @@
                 <h2 class="text-3xl">{appName}</h2>
             </a>
             <div class="flex items-center gap-4">
-                <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
+                {#if $activeUser}
+                    <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
+                {/if}
                 <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
                 <Button on:click={() => goto('/about')} variant="link">About</Button>
             </div>
