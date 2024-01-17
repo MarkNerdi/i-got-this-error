@@ -4,6 +4,7 @@
     import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '$lib/components/ui/dropdown-menu';
     import type { User } from '$lib/server/users/users.types';
     import { signOut } from '@auth/sveltekit/client';
+    import { toggleMode } from 'mode-watcher';
 
     export let user: User;
 </script>
@@ -25,6 +26,9 @@
 			</div>
 		</DropdownMenuLabel>
 		<DropdownMenuSeparator />
+		<DropdownMenuItem on:click={() => toggleMode()} class="cursor-pointer">
+            Switch theme
+		</DropdownMenuItem>
 		<DropdownMenuItem on:click={() => signOut()} class="cursor-pointer">
 			Log out
 		</DropdownMenuItem>
