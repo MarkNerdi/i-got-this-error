@@ -3,6 +3,7 @@
     import type { StatusCode } from '$lib/server/status/status-code.type.js';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
+    import { activeUser } from '$lib/stores/user.store.js';
 
     export let data;
 
@@ -26,7 +27,13 @@
 
 <profile-view>
     <div class="w-full flex flex-row justify-between align-center">
-        <h2 class="text-3xl font-bold">Your Profile</h2>
+        <h2 class="text-3xl font-bold">
+            {
+                data.user?.username === $activeUser?.username
+                    ? 'Your Profile'
+                    : `${data.user?.username}'s Profile`
+            }
+        </h2>
     </div>
 
     <progress-section >
