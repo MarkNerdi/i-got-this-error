@@ -7,8 +7,11 @@
     import { ExternalLink, ThumbsUp } from 'lucide-svelte';
     import type { ReceivedCode } from '$lib/server/users/users.types.js';
     import { enhance } from '$app/forms';
+    import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
 
     export let data;
+
+    $: isActiveUser = data.user?.username === $activeUser?.username;
 
     let groupedStatusCodes: Record<string, ReceivedCode[]> = {};
     $: groupedStatusCodes = data.user?.receivedCodes.reduce((acc, statusCode) => {
@@ -28,44 +31,55 @@
 <profile-view>
     <div class="w-full flex flex-row justify-between align-center">
         <h2 class="text-3xl font-bold">{
-            data.user?.username === $activeUser?.username
+            isActiveUser
                 ? 'Your Profile'
                 : `${data.user?.username}'s Profile`
         }</h2>
-        <form method="POST" action="?/toggleFollow" use:enhance>
-            <input type="hidden" name="username" value={data.user?.username} />
-            <input type="hidden" name="follow" value={!data.user?.isFollowed} />
+        {#if !isActiveUser}
+            <form method="POST" action="?/toggleFollow" use:enhance>
+                <input type="hidden" name="username" value={data.user?.username} />
+                <input type="hidden" name="follow" value={!data.user?.isFollowed} />
 
-            {#if data.user?.isFollowed}
-                <Button variant="outline" type="submit">
-                    Unfollow
-                </Button>
-            {:else}
-                <Button variant="secondary" type="submit">
-                    <ThumbsUp class="w-4 h-4 mr-3" />
-                    Follow
-                </Button>
-            {/if}
-        </form>
+                {#if data.user?.isFollowed}
+                    <Button variant="outline" type="submit">
+                        Unfollow
+                    </Button>
+                {:else}
+                    <Button variant="secondary" type="submit">
+                        <ThumbsUp class="w-4 h-4 mr-3" />
+                        Follow
+                    </Button>
+                {/if}
+            </form>
+        {/if}
     </div>
 
     <progress-section >
-        <div class="flex flex-col items-center gap-4">
-            <Card class="w-[120px] h-[120px] flex items-center justify-center  p-6 border-2 rounded-full">
-                <div class="flex gap-1 items-end justify-center">
-                    <h4 class="text-4xl font-bold">32</h4>
-                    <p class="text-xs rounded-full text-muted-foreground pb-1">/52</p>
+        <div class="flex gap-4">
+            <Avatar class="h-16 w-16">
+                <AvatarImage src="{data.user?.image}" alt="{data.user?.username}" />
+                <AvatarFallback>SC</AvatarFallback>
+            </Avatar>
+            <div class="flex flex-col">
+                <div class="flex flex-row items-center gap-2">
+                    <h3 class="text-2xl font-bold items-start">{data.user?.username}</h3>
+                    <Button on:click={() => goToExternalLink(data.user?.profileUrl ?? '')} variant="link">
+                        <ExternalLink class="w-4 h-4" />
+                    </Button>
                 </div>
-            </Card>
-        </div>
-        <div class="flex flex-col gap-4">
-            <div class="flex flex-row items-center gap-2">
-                <Button on:click={() => goToExternalLink(data.user?.profileUrl ?? '')} variant="link">
-                    <h3 class="text-2xl font-bold">{data.user?.username}</h3>
-                    <ExternalLink class="w-4 h-4 ml-1" />
-                </Button>
+                <p class="text-sm rounded-full text-muted-foreground pb-1">
+                    <span class="font-bold">{data.user?.amountFollowers}</span> followers | 
+                    <span class="font-bold">{data.user?.amountFollowings}</span> followings 
+                </p>
             </div>
         </div>
+        <Card class="w-[120px] h-[120px] flex items-center justify-center p-6 border-2 rounded-full">
+            <div class="flex gap-1 items-end justify-center">
+                <h4 class="text-4xl font-bold">32</h4>
+                <p class="text-xs rounded-full text-muted-foreground pb-1">/52</p>
+            </div>
+        </Card>
+
     </progress-section>
 
     <div class="w-full overflow-auto flex flex-col gap-12">
@@ -112,7 +126,7 @@
     }
 
     progress-section {
-        @apply w-full flex flex-row items-center justify-center gap-4 p-16;
+        @apply w-full flex flex-row items-center justify-center gap-16 p-16;
     }
 
     status-codes-section {
