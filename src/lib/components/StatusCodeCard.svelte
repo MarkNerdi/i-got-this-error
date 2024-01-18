@@ -8,12 +8,14 @@
     import { activeUser } from '$lib/stores/user.store';
     import LoginButton from '$lib/components/LoginButton.svelte';
     import type { ReceivedCode } from '$lib/server/users/users.types';
+    import { applyAction, enhance } from '$app/forms';
 
     export let statusCode: StatusCode | ReceivedCode;
 
+    let open = false;
 </script>
 
-<Dialog.Root>
+<Dialog.Root bind:open>
     <Dialog.Trigger >
         <Card class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer h-full gap-2">
             <h3 class="text-2xl">{statusCode.code}</h3>
@@ -21,7 +23,15 @@
         </Card>
     </Dialog.Trigger>
     <Dialog.Content class="sm:max-w-[425px]">
-        <form method="POST">
+        <form method="POST" use:enhance={() => {
+            return async ({ result }) => {
+                if (result.type === 'success') {
+                    open = false;
+                } else {
+                    await applyAction(result);
+                }
+            };
+        }}>
             <Dialog.Header>
                 <Dialog.Title>Did you get this status code?</Dialog.Title>
                 <Dialog.Description>

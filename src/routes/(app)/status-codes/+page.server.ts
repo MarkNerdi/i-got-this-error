@@ -3,6 +3,7 @@ import { statusCodeController } from '$lib/server/status/status-code.controller'
 import type { PageServerLoad } from './$types';
 import type { ReceivedCode } from '$lib/server/users/users.types';
 import { userController } from '$lib/server/users/users.controller';
+import { fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {
     const statusCodes = await statusCodeController.getAll();
@@ -15,7 +16,7 @@ export const actions = {
         const session = await locals.getSession();
         const user = session?.user?.id ? await userController.getById(session.user.id) : undefined;
         if (!user) {
-            return { status: 403 };
+            return fail(403);
         }
 
         const data = await request.formData();
@@ -23,7 +24,7 @@ export const actions = {
         const note = data.get('note') as string ?? '';
 
         if (!code) {
-            return { status: 400 };
+            return fail(400);
         }
 
         const statusCode = await statusCodeController.getByCode(code);
