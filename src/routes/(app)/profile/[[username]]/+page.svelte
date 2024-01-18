@@ -61,7 +61,7 @@
                 <AvatarFallback>SC</AvatarFallback>
             </Avatar>
             <div class="flex flex-col">
-                <div class="flex flex-row items-center gap-2">
+                <div class="flex flex-row items-center">
                     <h3 class="text-2xl font-bold items-start">{data.user?.username}</h3>
                     <Button on:click={() => goToExternalLink(data.user?.profileUrl ?? '')} variant="link">
                         <ExternalLink class="w-4 h-4" />
