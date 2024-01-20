@@ -55,7 +55,7 @@
 
 <style lang="postcss">
     header {
-        @apply md:h-[70px] p-4 sm:h-[60px] sm:p-2;
+        @apply h-[70px] p-4;
         @apply flex justify-between items-center gap-4;
         @apply bg-white dark:bg-black;
         @apply border-b border-solid border-border ;

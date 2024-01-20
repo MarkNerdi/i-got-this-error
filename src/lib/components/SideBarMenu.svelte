@@ -10,8 +10,6 @@
 
     let open = false;
 
-    $: console.log(open);
-
     function onMenuItemClick(route: string, external: boolean = false) {
         if (external) {
             goToExternalLink(route);
@@ -20,7 +18,6 @@
         }
         open = false;
     }
-    
 </script>
 
 <Sheet.Root bind:open>

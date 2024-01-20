@@ -7,7 +7,7 @@
 
 </script>
 
-<Button on:click={() => signIn('github')} class="flex gap-2">
+<Button on:click={() => signIn('github')} class="flex gap-2 font-bold">
    <Github />
     Sign In { $isMobile ? '' : ' with GitHub'}
 </Button>

@@ -48,6 +48,22 @@
   }
 }
 
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('$lib/assets/fonts/Anonymous_Pro.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('$lib/assets/fonts/Anonymous_Pro_B.ttf') format('truetype');
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -55,6 +71,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+* {
+    font-weight: 400;
+    font-style: normal;
+    font-family: 'Anonymous Pro';
 }
 
 html,

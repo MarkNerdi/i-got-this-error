@@ -14,7 +14,7 @@
         {#each data.users as user}
             <Card on:click={() => goto(`/profile/${user.username}`)} class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer gap-2">
                 <img src={user.image} alt={user.username} class="w-24 h-24 rounded-full" />
-                <p class="text-center">{user.username}</p>
+                <p class="text-center font-bold">{user.username}</p>
             </Card>
         {/each}
     </user-list>
