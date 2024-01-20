@@ -1,5 +1,5 @@
 import { userController } from '$lib/server/users/users.controller';
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { userCollection } from '$lib/server/db';
 import { ObjectId } from 'mongodb';
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
     const user = await userController.getByUsername(username);
     if (!user) {
-        return { status: 404 };
+        return fail(404);
     }
 
     const serializedUser = {
@@ -36,19 +36,19 @@ export const actions = {
     toggleFollow: async ({ locals, request }) => {
         const session = await locals.getSession();
         if (!session?.user) {
-            return { status: 403 };
+            return fail(403);
         }
 
         const data = await request.formData();
         const username = data.get('username') as string;
         const follow = data.get('follow') as string === 'true';
         if (!username) {
-            return { status: 400 };
+            return fail(400);
         }
 
         const user = await userController.getByUsername(username);
         if (!user) {
-            return { status: 400 };
+            return fail(400);
         }
 
         if (follow) {

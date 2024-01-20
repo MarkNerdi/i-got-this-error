@@ -11,10 +11,11 @@
 
     export let data;
 
-    $: isActiveUser = data.user?.username === $activeUser?.username;
+    $: user = data.user;
+    $: isActiveUser = user?.username === $activeUser?.username;
 
     let groupedStatusCodes: Record<string, ReceivedCode[]> = {};
-    $: groupedStatusCodes = data.user?.receivedCodes.reduce((acc, statusCode) => {
+    $: groupedStatusCodes = user?.receivedCodes.reduce((acc, statusCode) => {
         const statusCodeGroup = statusCode.code[0] + 'xx';
 
         if (!acc[statusCodeGroup]) {
@@ -25,7 +26,10 @@
     }, {} as Record<string, ReceivedCode[]>) ?? {};
 
     let newestStatusCodes: ReceivedCode[] = [];
-    $: newestStatusCodes = data.user?.receivedCodes.sort((a, b) => b.receivedAt - a.receivedAt).slice(0, 5) ?? [];
+    $: newestStatusCodes = user?.receivedCodes.sort((a, b) => b.receivedAt - a.receivedAt).slice(0, 5) ?? [];
+
+    $: followerString = `follower${ user?.amountFollowers !== 1 ? 's' : '' }`;
+    $: followingString = `following${ user?.amountFollowings !== 1 ? 's' : '' }`;
 </script>
 
 <profile-view>
@@ -33,14 +37,14 @@
         <h2 class="text-3xl font-bold">{
             isActiveUser
                 ? 'Your Profile'
-                : `${data.user?.username}'s Profile`
+                : `${user?.username}'s Profile`
         }</h2>
-        {#if !isActiveUser}
+        {#if $activeUser && !isActiveUser}
             <form method="POST" action="?/toggleFollow" use:enhance>
-                <input type="hidden" name="username" value={data.user?.username} />
-                <input type="hidden" name="follow" value={!data.user?.isFollowed} />
+                <input type="hidden" name="username" value={user?.username} />
+                <input type="hidden" name="follow" value={!user?.isFollowed} />
 
-                {#if data.user?.isFollowed}
+                {#if user?.isFollowed}
                     <Button variant="outline" type="submit">
                         Unfollow
                     </Button>
@@ -56,20 +60,20 @@
 
     <progress-section >
         <div class="flex gap-4">
-            <Avatar class="h-16 w-16">
-                <AvatarImage src="{data.user?.image}" alt="{data.user?.username}" />
+            <Avatar class="h-20 w-20">
+                <AvatarImage src="{user?.image}" alt="{user?.username}" />
                 <AvatarFallback>SC</AvatarFallback>
             </Avatar>
-            <div class="flex flex-col">
+            <div class="flex flex-col justify-center">
                 <div class="flex flex-row items-center">
-                    <h3 class="text-2xl font-bold items-start">{data.user?.username}</h3>
-                    <Button on:click={() => goToExternalLink(data.user?.profileUrl ?? '')} variant="link">
+                    <h3 class="text-2xl font-bold items-start">{user?.username}</h3>
+                    <Button on:click={() => goToExternalLink(user?.profileUrl ?? '')} variant="link">
                         <ExternalLink class="w-4 h-4" />
                     </Button>
                 </div>
                 <p class="text-sm rounded-full text-muted-foreground pb-1">
-                    <span class="font-bold">{data.user?.amountFollowers}</span> followers | 
-                    <span class="font-bold">{data.user?.amountFollowings}</span> followings 
+                    <span class="font-bold">{user?.amountFollowers}</span> {followerString} | 
+                    <span class="font-bold">{user?.amountFollowings}</span> {followingString} 
                 </p>
             </div>
         </div>

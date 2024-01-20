@@ -10,8 +10,6 @@
     import { goToExternalLink } from '$lib/utils/general';
     import { ExternalLink } from 'lucide-svelte';
 
-    $: console.log($isMobile);
-    
 </script>
 
 <div class="flex flex-col h-screen w-screen">
