@@ -1,22 +1,85 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { Button } from '$lib/components/ui/button';
-    import { activeUser } from '$lib/stores/user.store';
+    import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
+    import { AvatarFallback } from '$lib/components/ui/avatar';
+    import Avatar from '$lib/components/ui/avatar/avatar.svelte';
+    import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
+    
+    export let data;
+
 </script>
 
 <home-view>
-    {#if $activeUser}
-    asdasd
-    {:else}
-        <h1 class="text-5xl font-bold">Welcome Player!</h1>
-        <h2 class="text-2xl">You're not logged in. To continue, please first create an account or log in</h2>
-        <Button on:click={() => goto('/auth/signin')}>Sign in</Button>
-    {/if}
+    <div class="w-full grid gap-16 grid-cols-6">
+        <Card class="col-span-2">
+            <CardHeader>
+                <CardTitle>What is this?</CardTitle>
+            </CardHeader>
+            <CardContent class="grid gap-6">
+                <CardDescription class="space-y-8">
+                    <p class="text-lg">
+                        <span class="font-bold">{'<i-got-this-error/>'}</span> is an objective measurement for your tech experience.
+                    </p>
+                    <p class="text-lg">
+                        Track your career progress, compare yourself to your friends and show them who's better!
+                    </p>
+                </CardDescription>
+            </CardContent>
+        </Card>
+        <Card class="col-span-4">
+            <CardHeader>
+                <CardTitle>Feed</CardTitle>
+                <CardDescription>Look what your friends achieved</CardDescription>
+            </CardHeader>
+            <CardContent class="grid gap-6">
+                {#each data.rarestStatusCodes as statusCode}
+                    <div class="w-full flex flex-row justify-between">
+                        <div class="w-full flex flex-row items-center">
+                            <Avatar class="w-8 h-8">
+                                <AvatarFallback>{statusCode.code}</AvatarFallback>
+                            </Avatar>
+                            <h3 class="text-base ml-4">{statusCode.title}</h3>
+                        </div>
+                        <p class="text-base">{statusCode.percentage}%</p>
+                    </div>
+                {/each}
+            </CardContent>
+        </Card>
+        <Card class="col-span-4">
+            <CardHeader>
+                <CardTitle>Rarest status codes</CardTitle>
+                <CardDescription>Only for the most experienced devs</CardDescription>
+            </CardHeader>
+            <CardContent class="grid gap-6">
+                {#each data.rarestStatusCodes as statusCode}
+                    <div class="w-full flex flex-row justify-between">
+                        <div class="w-full flex flex-row items-center">
+                            <Avatar class="w-8 h-8">
+                                <AvatarFallback>{statusCode.code}</AvatarFallback>
+                            </Avatar>
+                            <h3 class="text-base ml-4">{statusCode.title}</h3>
+                        </div>
+                        <p class="text-base">{statusCode.percentage}%</p>
+                    </div>
+                {/each}
+            </CardContent>
+        </Card>
+        <Card class="col-span-2">
+            <CardHeader>
+                <CardTitle>Code of the Day</CardTitle>
+            </CardHeader>
+            <CardContent class="grid gap-6">
+                <StatusCodeCard statusCode={data.todaysStatusCode} />
+                <CardDescription>
+                    It's like trying to crash a VIP party without an invite. The internet bouncer is giving you the virtual side-eye, saying, "Sorry, pal, you're not on the list."
+                </CardDescription>
+            </CardContent>
+        </Card>
+    </div>
 </home-view>
 
 <style lang="postcss">
     home-view {
-        @apply w-full h-full max-w-[1000px];
-        @apply flex flex-col justify-center items-center gap-8;
+        @apply w-full h-full max-w-[1200px];
+        @apply flex flex-col justify-center items-center gap-16;
     }
 </style>

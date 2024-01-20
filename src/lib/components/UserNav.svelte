@@ -20,9 +20,8 @@
 			</Avatar>
             {#if expanded}
                 <h2>{user.username}</h2>
-                 <!-- content here -->
+				<p class="text-xs leading-none text-muted-foreground">{user.email}</p>
             {/if}
-
             </div>
 		</Button>
 	</DropdownMenuTrigger>
