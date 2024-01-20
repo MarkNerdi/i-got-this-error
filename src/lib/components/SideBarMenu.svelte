@@ -28,7 +28,7 @@
   </Sheet.Trigger>
   <Sheet.Content side="left" class="flex flex-col">
     <Sheet.Header>
-        <h2 class="text-2xl">{'<i-got-this-error />'}</h2>
+        <h2 class="text-xl">{'<i-got-this-error />'}</h2>
     </Sheet.Header>
     <Separator />
     <div class="flex-grow flex flex-col space-y-4 py-4">
