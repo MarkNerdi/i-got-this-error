@@ -1,33 +1,40 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import LoginButton from '$lib/components/LoginButton.svelte';
+    import SideBarMenu from '$lib/components/SideBarMenu.svelte';
     import UserNav from '$lib/components/UserNav.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
     import { activeUser } from '$lib/stores/user.store';
+    import { isMobile } from '$lib/stores/window.store';
     import { goToExternalLink } from '$lib/utils/general';
     import { ExternalLink } from 'lucide-svelte';
 
-    const appName = '<i-got-this-error />';
-
+    $: console.log($isMobile);
+    
 </script>
 
 <div class="flex flex-col h-screen w-screen">
     <header>
         <div class="flex justify-between items-center gap-4">
-            <a href="/">
-                <h2 class="text-3xl">{appName}</h2>
-            </a>
-            <div class="flex items-center gap-4">
-                {#if $activeUser}
-                    <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
-                {/if}
-                <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
-                <Button on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')} variant="link">
-                    Contribute!
-                    <ExternalLink class="w-4 h-4 ml-1" />
-                </Button>
-            </div>
+            {#if $isMobile}
+                <SideBarMenu />
+            {:else}
+                <a href="/">
+                    <h2 class="text-3xl">{'<i-got-this-error />'}</h2>
+                </a>
+                <div class="flex items-center gap-4">
+                    {#if $activeUser}
+                        <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
+                    {/if}
+                    <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
+                    <Button on:click={() => goto('/devs')} variant="link">Community</Button>
+                    <Button on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')} variant="link">
+                        Contribute!
+                        <ExternalLink class="w-4 h-4 ml-1" />
+                    </Button>
+                </div>
+            {/if}
         </div>
         <div class="flex justify-between items-center gap-4">
             <form action="/devs"  >
@@ -35,7 +42,7 @@
             </form>
             {#if !$activeUser}
                 <LoginButton />
-            {:else}
+            {:else if !$isMobile}
                 <UserNav user={$activeUser}/>
             {/if}
         </div>
@@ -48,7 +55,7 @@
 
 <style lang="postcss">
     header {
-        @apply h-[70px] p-4;
+        @apply md:h-[70px] p-4 sm:h-[60px] sm:p-2;
         @apply flex justify-between items-center gap-4;
         @apply bg-white dark:bg-black;
         @apply border-b border-solid border-border ;
