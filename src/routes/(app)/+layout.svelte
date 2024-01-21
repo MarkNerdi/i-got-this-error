@@ -26,7 +26,7 @@
                         <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
                     {/if}
                     <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
-                    <Button on:click={() => goto('/devs')} variant="link">Community</Button>
+                    <Button on:click={() => goto('/devs?page=1')} variant="link">Community</Button>
                     <Button on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')} variant="link">
                         Contribute!
                         <ExternalLink class="w-4 h-4 ml-1" />
@@ -36,6 +36,7 @@
         </div>
         <div class="flex justify-between items-center gap-4">
             <form action="/devs"  >
+                <input type="hidden" name="page" value="1" />
                 <Input placeholder="Search other devs" name="search" required />
             </form>
             {#if !$activeUser}
