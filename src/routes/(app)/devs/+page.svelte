@@ -3,6 +3,8 @@
     import { page } from '$app/stores';
     import PaginationFooter from '$lib/components/PaginationFooter.svelte';
     import { Card } from '$lib/components/ui/card/index.js';
+    import { metaTags } from '$lib/constants/metadata.constant.js';
+    import { MetaTags } from 'svelte-meta-tags';
 
     export let data;
 
@@ -13,6 +15,8 @@
         goto(`?${query.toString()}`);
     }
 </script>
+
+<MetaTags {...metaTags} title='Community' />
 
 <users-view>
     <div class="w-full flex flex-row justify-between align-center">

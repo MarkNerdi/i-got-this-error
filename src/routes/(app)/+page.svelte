@@ -5,7 +5,6 @@
     import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
     
     export let data;
-
 </script>
 
 <home-view>

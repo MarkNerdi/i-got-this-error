@@ -2,7 +2,9 @@
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { Input } from '$lib/components/ui/input/index.js';
     import { ToggleGroup, ToggleGroupItem } from '$lib/components/ui/toggle-group';
+    import { metaTags } from '$lib/constants/metadata.constant.js';
     import type { StatusCode } from '$lib/server/status/status-code.type.js';
+    import { MetaTags } from 'svelte-meta-tags';
 
     export let data;
 
@@ -39,6 +41,9 @@
         return statusCode.code.toLowerCase().includes(searchTerm.toLowerCase()) || statusCode.title.toLowerCase().includes(searchTerm.toLowerCase());
     }
 </script>
+
+
+<MetaTags {...metaTags} title='Status codes' />
 
 <status-codes-view>
     <div class="w-full flex flex-row justify-between align-center">

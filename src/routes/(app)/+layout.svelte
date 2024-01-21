@@ -5,12 +5,15 @@
     import UserNav from '$lib/components/UserNav.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
+    import { metaTags } from '$lib/constants/metadata.constant';
     import { activeUser } from '$lib/stores/user.store';
     import { isMobile } from '$lib/stores/window.store';
     import { goToExternalLink } from '$lib/utils/general';
     import { ExternalLink } from 'lucide-svelte';
-
+    import { MetaTags } from 'svelte-meta-tags';
 </script>
+
+<MetaTags {...metaTags} />
 
 <div class="flex flex-col h-screen w-screen">
     <header>

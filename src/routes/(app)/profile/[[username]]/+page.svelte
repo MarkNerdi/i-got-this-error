@@ -8,6 +8,8 @@
     import type { ReceivedCode } from '$lib/server/users/users.types.js';
     import { enhance } from '$app/forms';
     import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
+    import { MetaTags } from 'svelte-meta-tags';
+    import { metaTags } from '$lib/constants/metadata.constant.js';
 
     export let data;
 
@@ -27,10 +29,9 @@
 
     let newestStatusCodes: ReceivedCode[] = [];
     $: newestStatusCodes = user?.receivedCodes.sort((a, b) => b.receivedAt - a.receivedAt).slice(0, 5) ?? [];
-
-    $: followerString = `follower${ user?.amountFollowers !== 1 ? 's' : '' }`;
-    $: followingString = `following${ user?.amountFollowings !== 1 ? 's' : '' }`;
 </script>
+
+<MetaTags {...metaTags} title={isActiveUser ? 'My Profile' : user?.username ?? 'Profile'} />
 
 <profile-view>
     <div class="w-full flex flex-row justify-between align-center">
@@ -72,8 +73,8 @@
                     </Button>
                 </div>
                 <p class="text-sm rounded-full text-muted-foreground pb-1">
-                    <span class="font-bold">{user?.amountFollowers}</span> {followerString} | 
-                    <span class="font-bold">{user?.amountFollowings}</span> {followingString} 
+                    <span class="font-bold">{user?.amountFollowers}</span> {`follower${ user?.amountFollowers !== 1 ? 's' : '' }`} | 
+                    <span class="font-bold">{user?.amountFollowings}</span> {`following${ user?.amountFollowings !== 1 ? 's' : '' }`} 
                 </p>
             </div>
         </div>
