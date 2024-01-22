@@ -15,7 +15,7 @@ export const actions = {
     default: async ({ locals, request }) => {
         const session = await locals.getSession();
         const user = session?.user?.id ? await userController.getById(session.user.id) : undefined;
-        if (!user) {
+        if (!user?._id) {
             return fail(403);
         }
 
@@ -34,13 +34,12 @@ export const actions = {
 
         const receivedStatusCode: ReceivedCode = {
             code,
-            title: statusCode.title,
-            rfc: statusCode.rfc,
             note,
             receivedAt: Date.now(),
         };
         
         await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        
+        await statusCodeController.addReceiver(code, user._id?.toString());        
 
         return { success: true };
     },

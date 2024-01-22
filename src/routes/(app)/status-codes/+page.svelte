@@ -3,7 +3,9 @@
     import { Input } from '$lib/components/ui/input/index.js';
     import { ToggleGroup, ToggleGroupItem } from '$lib/components/ui/toggle-group';
     import { metaTags } from '$lib/constants/metadata.constant.js';
+    import { STATUS_CODES } from '$lib/constants/status-codes.constant.js';
     import type { StatusCode } from '$lib/server/status/status-code.type.js';
+    import { activeUser } from '$lib/stores/user.store.js';
     import { MetaTags } from 'svelte-meta-tags';
 
     export let data;
@@ -38,7 +40,7 @@
             return true;
         }
 
-        return statusCode.code.toLowerCase().includes(searchTerm.toLowerCase()) || statusCode.title.toLowerCase().includes(searchTerm.toLowerCase());
+        return statusCode.code.toLowerCase().includes(searchTerm.toLowerCase()) || STATUS_CODES[statusCode.code]?.title.toLowerCase().includes(searchTerm.toLowerCase());
     }
 </script>
 
@@ -78,7 +80,7 @@
                 <h3 class="text-2xl">{statusCodesGroupKey}</h3>
                 <status-code-list>
                     {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                        <StatusCodeCard {statusCode} />
+                        <StatusCodeCard {statusCode} isReceived={$activeUser?.receivedCodes.some(code => code.code === statusCode.code)} />
                     {/each}
                 </status-code-list>
             </div>

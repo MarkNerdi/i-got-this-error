@@ -9,17 +9,23 @@
     import LoginButton from '$lib/components/LoginButton.svelte';
     import type { ReceivedCode } from '$lib/server/users/users.types';
     import { applyAction, enhance } from '$app/forms';
+    import { STATUS_CODES } from '$lib/constants/status-codes.constant';
+    import { CheckIcon } from 'lucide-svelte';
 
     export let statusCode: StatusCode | ReceivedCode;
+    export let isReceived = false;
 
     let open = false;
 </script>
 
 <Dialog.Root bind:open>
     <Dialog.Trigger >
-        <Card class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer h-full gap-2">
+        <Card class="relative flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer h-full gap-2">
             <h3 class="text-2xl">{statusCode.code}</h3>
-            <p class="text-sm text-muted-foreground">{statusCode.title}</p>
+            <p class="text-sm text-muted-foreground">{STATUS_CODES[statusCode.code]?.title}</p>
+            {#if isReceived}
+                <CheckIcon class="absolute top-2 right-2 w-5 h-5" />
+            {/if}
         </Card>
     </Dialog.Trigger>
     <Dialog.Content class="sm:max-w-[425px]">
@@ -41,7 +47,7 @@
             <div class="flex flex-col items-center gap-8 py-4">
                 <Card class="w-[120px] h-[120px] flex flex-col items-center justify-center p-6">
                     <h3 class="text-2xl">{statusCode.code}</h3>
-                    <p class="text-sm text-center">{statusCode.title}</p>
+                    <p class="text-sm text-center">{STATUS_CODES[statusCode.code]?.title}</p>
                 </Card>
                 {#if $activeUser}
                     <div class="w-full flex flex-col gap-2">

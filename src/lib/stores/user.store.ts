@@ -1,4 +1,5 @@
 import { page } from '$app/stores';
-import { derived } from 'svelte/store';
+import type { UserModel } from '$lib/server/users/users.types';
+import { derived, type Readable } from 'svelte/store';
 
-export const activeUser = derived([page], ([page]) => page.data.session?.user ?? null);
+export const activeUser: Readable<UserModel | undefined> = derived([page], ([page]) => page.data.session?.user as UserModel ?? undefined);

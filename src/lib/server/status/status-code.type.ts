@@ -4,8 +4,6 @@ export type StatusCode = {
     _id?: ObjectId | string
 
     code: string
-    title: string
-    rfc: string
 
-    receivedBy: (ObjectId | string)[]
+    receivedBy: string[]
 };

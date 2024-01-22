@@ -1,8 +1,8 @@
 <script lang="ts">
-    import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { AvatarFallback } from '$lib/components/ui/avatar';
     import Avatar from '$lib/components/ui/avatar/avatar.svelte';
     import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
+    import { STATUS_CODES } from '$lib/constants/status-codes.constant';
     
     export let data;
 </script>
@@ -36,7 +36,7 @@
                             <Avatar class="w-8 h-8">
                                 <AvatarFallback>{statusCode.code}</AvatarFallback>
                             </Avatar>
-                            <h3 class="text-base ml-4">{statusCode.title}</h3>
+                            <h3 class="text-base ml-4">{STATUS_CODES[statusCode.code]?.title}</h3>
                         </div>
                         <p class="text-base">{statusCode.percentage}%</p>
                     </div>
@@ -55,7 +55,7 @@
                             <Avatar class="w-8 h-8">
                                 <AvatarFallback>{statusCode.code}</AvatarFallback>
                             </Avatar>
-                            <h3 class="text-base ml-4">{statusCode.title}</h3>
+                            <h3 class="text-base ml-4">{STATUS_CODES[statusCode.code]?.title}</h3>
                         </div>
                         <p class="text-base">{statusCode.percentage}%</p>
                     </div>
@@ -64,12 +64,15 @@
         </Card>
         <Card class="col-span-2">
             <CardHeader>
-                <CardTitle>Code of the Day</CardTitle>
+                <CardTitle>Status of the Day</CardTitle>
             </CardHeader>
             <CardContent class="grid gap-6">
-                <StatusCodeCard statusCode={data.todaysStatusCode} />
+                <div class="flex flex-col justify-center items-center p-6 h-full gap-2">
+                    <h3 class="text-2xl">{data.todaysStatusCode.code}</h3>
+                    <p class="text-sm text-muted-foreground">{STATUS_CODES[data.todaysStatusCode.code]?.title}</p>
+                </div>
                 <CardDescription>
-                    It's like trying to crash a VIP party without an invite. The internet bouncer is giving you the virtual side-eye, saying, "Sorry, pal, you're not on the list."
+                    {STATUS_CODES[data.todaysStatusCode.code]?.description}
                 </CardDescription>
             </CardContent>
         </Card>

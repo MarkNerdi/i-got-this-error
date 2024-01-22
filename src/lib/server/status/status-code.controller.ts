@@ -1,19 +1,6 @@
 import { statusCodeCollection } from '$lib/server/db';
 import type { StatusCode } from '$lib/server/status/status-code.type';
-import { type UpdateResult } from 'mongodb';
-
-
-async function create(code: string, title: string, rfc: string): Promise<StatusCode | null> {
-    const statusCode: StatusCode = {
-        code,
-        title,
-        rfc,
-        receivedBy: [],
-    };
-
-    await statusCodeCollection.insertOne(statusCode);
-    return statusCode;
-}
+import type { UpdateResult } from 'mongodb';
 
 
 async function getAll(): Promise<StatusCode[]> {
@@ -37,9 +24,13 @@ async function update(code: string, statusCode: Partial<StatusCode>): Promise<Up
     return statusCodeCollection.updateOne({ code }, { $set: { ...statusCode } });
 }
 
+async function addReceiver(code: string, userId: string): Promise<UpdateResult> {
+    return statusCodeCollection.updateOne({ code }, { $push: { receivedBy: userId } });        
+}
+
 export const statusCodeController = {
-    create,
     update,
     getAll,
     getByCode,
+    addReceiver,
 };

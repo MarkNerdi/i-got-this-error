@@ -19,9 +19,6 @@ export type UserModel = {
 
 export type ReceivedCode = {
     code: string;
-    title: string;
-    rfc: string;
-
     note: string;
     receivedAt: number;
 }
