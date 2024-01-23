@@ -54,7 +54,7 @@
                         <Label >Let everyone know how you got this one</Label>
                         <Input name="note" class="col-span-3" />
                     </div>
-                    <Input value={statusCode.code} name="code" type="hidden" />
+                    <Input value={statusCode.code} name="code" type="hidden" textarea />
 
                     {:else}
                     <p class="text-xl">To track your progress, please first sign up!</p>
