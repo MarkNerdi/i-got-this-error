@@ -4,7 +4,7 @@
     import Button from '$lib/components/ui/button/button.svelte';
     import { activeUser } from '$lib/stores/user.store.js';
     import { goToExternalLink } from '$lib/utils/general.js';
-    import { ExternalLink, ThumbsUp } from 'lucide-svelte';
+    import { ExternalLink, ThumbsUp, Trophy } from 'lucide-svelte';
     import type { ReceivedCode } from '$lib/server/users/users.types.js';
     import { enhance } from '$app/forms';
     import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
@@ -87,7 +87,7 @@
 
     </progress-section>
 
-    <div class="w-full overflow-auto flex flex-col gap-12">
+    <div class="w-full flex-grow overflow-auto flex flex-col gap-12">
         {#if data.user?.receivedCodes?.length}
             <status-codes-section>
                 <h2 class="text-2xl font-bold">Newest Achievements</h2>
@@ -103,22 +103,28 @@
         <status-codes-section>
             <h2 class="text-2xl font-bold">All Achievements</h2>
 
-            {#if data.user?.receivedCodes?.length}
-                <list-container>
-                    {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
-                        <div class="flex flex-col items-start gap-4">
-                            <h3 class="text-2xl">{statusCodesGroupKey}</h3>
-                            <status-code-list>
-                                {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                                    <StatusCodeCard {statusCode} />
-                                {/each}
-                            </status-code-list>
-                        </div>
-                    {/each}
-                </list-container>
-            {:else}
-                empty
-            {/if}
+            <list-container>
+                {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
+                    <div class="flex flex-col items-start gap-4">
+                        <h3 class="text-2xl">{statusCodesGroupKey}</h3>
+                        <status-code-list>
+                            {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
+                                <StatusCodeCard {statusCode} />
+                            {/each}
+                        </status-code-list>
+                    </div>
+                {:else}
+                    <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
+                        <Trophy class="w-20 h-20 mb-4" />
+                        <h3 class="text-lg font-semibold">No achievements</h3>
+                        <p class="text-sm text-muted-foreground">
+                            {isActiveUser ?
+                                'You have not received any status codes yet.' :
+                                user?.username + ' has not received any status codes yet.'}
+                        </p>
+                    </div>
+                {/each}
+            </list-container>
         </status-codes-section>
     </div>
 </profile-view>
@@ -135,7 +141,7 @@
     }
 
     status-codes-section {
-        @apply w-full flex flex-col items-start gap-8;
+        @apply w-full flex-grow flex flex-col items-start gap-8;
     }
 
     list-container {
