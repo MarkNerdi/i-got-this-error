@@ -43,7 +43,7 @@
                 {/each}
             </CardContent>
         </Card>
-        <Card class="col-span-4">
+        <Card class="col-span-3">
             <CardHeader>
                 <CardTitle>Rarest status codes</CardTitle>
                 <CardDescription>Only for the most experienced devs</CardDescription>
@@ -62,7 +62,7 @@
                 {/each}
             </CardContent>
         </Card>
-        <Card class="col-span-2">
+        <Card class="col-span-3">
             <CardHeader>
                 <CardTitle>Status of the Day</CardTitle>
             </CardHeader>
@@ -71,7 +71,7 @@
                     <h3 class="text-2xl">{data.todaysStatusCode.code}</h3>
                     <p class="text-sm text-muted-foreground">{STATUS_CODES[data.todaysStatusCode.code]?.title}</p>
                 </div>
-                <CardDescription>
+                <CardDescription class="text-center">
                     {STATUS_CODES[data.todaysStatusCode.code]?.description}
                 </CardDescription>
             </CardContent>

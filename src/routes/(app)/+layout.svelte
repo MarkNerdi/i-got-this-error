@@ -53,7 +53,7 @@
         </div>
     </header>
 
-    <main class="p-5">
+    <main class="overflow-hidden">
         <slot />
     </main>
 </div>
@@ -64,7 +64,6 @@
         @apply flex justify-between items-center gap-4;
         @apply bg-white dark:bg-black;
         @apply border-b border-solid border-border;
-        @apply sticky top-0 z-50;
     }
 
     main {

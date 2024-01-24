@@ -48,7 +48,7 @@
 <MetaTags {...metaTags} title='Status codes' />
 
 <status-codes-view>
-    <div class="w-full flex flex-row justify-between align-center">
+    <div class="w-full flex flex-row justify-between align-center max-w-[1000px]">
         <h2 class="text-3xl font-bold">Status codes</h2>
         
         <div class="flex gap-4 items-center">
@@ -74,30 +74,31 @@
         </div>
     </div>
 
-    <list-container>
-        {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
-            <div class="flex flex-col items-start gap-4">
-                <h3 class="text-2xl">{statusCodesGroupKey}</h3>
-                <status-code-list>
-                    {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                        <StatusCodeCard {statusCode} isReceived={$activeUser?.receivedCodes.some(code => code.code === statusCode.code)} />
-                    {/each}
-                </status-code-list>
-            </div>
-        {/each}
-    </list-container>
+    <div class="w-full h-full flex flex-row justify-center items-start overflow-auto">
+        <list-container>
+            {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
+                <div class="flex flex-col items-start gap-4">
+                    <h3 class="text-2xl">{statusCodesGroupKey}</h3>
+                    <status-code-list>
+                        {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
+                            <StatusCodeCard {statusCode} isReceived={$activeUser?.receivedCodes.some(code => code.code === statusCode.code)} />
+                        {/each}
+                    </status-code-list>
+                </div>
+            {/each}
+        </list-container>
+    </div>
 </status-codes-view>
 
 
 <style lang="postcss">
     status-codes-view {
-        @apply w-full h-full max-w-[1000px];
-        @apply flex flex-col justify-center items-start gap-8;
+        @apply w-full h-full py-6;
+        @apply flex flex-col justify-center items-center gap-8;
     }
 
     list-container {
-        @apply w-full flex-grow flex flex-col gap-8;
-        @apply overflow-auto;
+        @apply w-full flex flex-col gap-8  max-w-[1000px];
     }
 
     status-code-list {

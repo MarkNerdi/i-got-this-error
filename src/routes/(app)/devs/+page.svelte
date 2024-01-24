@@ -48,7 +48,7 @@
 
 <style lang="postcss">
     users-view {
-        @apply w-full h-full max-w-[1000px];
+        @apply w-full h-full max-w-[1000px] p-6;
         @apply flex flex-col justify-center items-start gap-8;
     }
 
