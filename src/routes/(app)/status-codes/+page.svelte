@@ -81,7 +81,8 @@
                     <h3 class="text-2xl">{statusCodesGroupKey}</h3>
                     <status-code-list>
                         {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                            <StatusCodeCard {statusCode} isReceived={$activeUser?.receivedCodes.some(code => code.code === statusCode.code)} />
+                            {@const code = $activeUser?.receivedCodes.find(code => code.code === statusCode.code)}
+                            <StatusCodeCard code={statusCode.code} receivedStatusCode={code} />
                         {/each}
                     </status-code-list>
                 </div>

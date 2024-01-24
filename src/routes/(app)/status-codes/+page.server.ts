@@ -28,7 +28,7 @@ export const actions = {
         }
 
         const statusCode = await statusCodeController.getByCode(code);
-        if (!statusCode || user.receivedCodes?.some(receivedCode => receivedCode.code === code)) {
+        if (!statusCode) {
             return { status: 400 };
         }
 
@@ -37,9 +37,15 @@ export const actions = {
             note,
             receivedAt: Date.now(),
         };
+
+        if (user.receivedCodes?.some(receivedCode => receivedCode.code === code)) {
+            await userCollection.updateOne({ _id: user._id }, { $pull: { 'receivedCodes.code': code } });        
+            await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        
+        } else {
+            await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        
+            await statusCodeController.addReceiver(code, user._id?.toString());        
+        }
         
-        await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        
-        await statusCodeController.addReceiver(code, user._id?.toString());        
 
         return { success: true };
     },

@@ -94,7 +94,7 @@
 
                 <status-code-list>
                     {#each newestStatusCodes as statusCode}
-                        <StatusCodeCard {statusCode} />
+                        <StatusCodeCard code={statusCode.code} receivedStatusCode={statusCode} {isActiveUser} />
                     {/each}
                 </status-code-list>
             </status-codes-section>
@@ -109,7 +109,7 @@
                         <h3 class="text-2xl">{statusCodesGroupKey}</h3>
                         <status-code-list>
                             {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                                <StatusCodeCard {statusCode} />
+                                <StatusCodeCard code={statusCode.code} receivedStatusCode={statusCode} {isActiveUser} />
                             {/each}
                         </status-code-list>
                     </div>
