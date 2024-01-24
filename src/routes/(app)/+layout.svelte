@@ -15,7 +15,7 @@
 
 <MetaTags {...metaTags} />
 
-<div class="flex flex-col h-screen w-screen">
+<div class="flex flex-col h-screen">
     <header>
         <div class="flex justify-between items-center gap-4">
             {#if $isMobile}
@@ -30,7 +30,10 @@
                     {/if}
                     <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
                     <Button on:click={() => goto('/devs?page=1')} variant="link">Community</Button>
-                    <Button on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')} variant="link">
+                    <Button
+                        on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')}
+                        variant="link"
+                    >
                         Contribute!
                         <ExternalLink class="w-4 h-4 ml-1" />
                     </Button>
@@ -38,19 +41,19 @@
             {/if}
         </div>
         <div class="flex justify-between items-center gap-4">
-            <form action="/devs"  >
+            <form action="/devs">
                 <input type="hidden" name="page" value="1" />
                 <Input placeholder="Search other devs" name="search" required />
             </form>
             {#if !$activeUser}
                 <LoginButton />
             {:else if !$isMobile}
-                <UserNav user={$activeUser}/>
+                <UserNav user={$activeUser} />
             {/if}
         </div>
     </header>
 
-    <main class="p-5 overflow-hidden">
+    <main class="p-5">
         <slot />
     </main>
 </div>
@@ -60,7 +63,8 @@
         @apply h-[70px] p-4;
         @apply flex justify-between items-center gap-4;
         @apply bg-white dark:bg-black;
-        @apply border-b border-solid border-border ;
+        @apply border-b border-solid border-border;
+        @apply sticky top-0 z-50;
     }
 
     main {
