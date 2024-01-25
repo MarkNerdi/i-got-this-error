@@ -101,7 +101,8 @@
                                 <StatusCodeCard code={statusCode.code} />
                             </AddStatusCodePopup>
                         {:else}
-                            <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!statusCode} />
+                            {@const isReceivedByActiveUser = $activeUser?.receivedCodes.some(code => code.code === statusCode.code)}
+                            <StatusCodeCard code={statusCode.code} {isReceivedByActiveUser} hoverAnimation={false} />
                         {/if}
                     {/each}
                 </status-code-list>
@@ -122,7 +123,8 @@
                                         <StatusCodeCard code={statusCode.code} />
                                     </AddStatusCodePopup>
                                 {:else}
-                                    <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!statusCode} />
+                                    {@const isReceivedByActiveUser = $activeUser?.receivedCodes.some(code => code.code === statusCode.code)}
+                                    <StatusCodeCard code={statusCode.code} {isReceivedByActiveUser} hoverAnimation={false} />
                                 {/if}
                             {/each}
                         </status-code-list>

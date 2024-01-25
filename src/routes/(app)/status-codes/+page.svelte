@@ -84,7 +84,7 @@
                         {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
                             {@const code = $activeUser?.receivedCodes.find(code => code.code === statusCode.code)}
                             <AddStatusCodePopup code={statusCode.code} receivedStatusCode={code} >
-                                <StatusCodeCard code={statusCode.code} receivedStatusCode={code} />
+                                <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!code} />
                             </AddStatusCodePopup>
                         {/each}
                     </status-code-list>
