@@ -47,7 +47,7 @@ export const actions = {
         }
         
 
-        return { success: true };
+        return receivedStatusCode;
     },
 };
 

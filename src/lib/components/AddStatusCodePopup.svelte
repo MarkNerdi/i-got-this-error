@@ -12,6 +12,7 @@
     import type { ReceivedCode } from '$lib/server/users/users.types';
     import { Toggle } from '$lib/components/ui/toggle';
     import Textarea from '$lib/components/ui/textarea/textarea.svelte';
+    import { invalidateAll } from '$app/navigation';
 
     export let code: string;
     export let receivedStatusCode: ReceivedCode | undefined = undefined;
@@ -28,6 +29,7 @@
         <form method="POST" use:enhance={() => {
             return async ({ result }) => {
                 if (result.type === 'success') {
+                    invalidateAll();
                     open = false;
                 } else {
                     await applyAction(result);
