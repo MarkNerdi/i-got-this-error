@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Card } from '$lib/components/ui/card';
-    import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
+    import AddStatusCodePopup from '$lib/components/AddStatusCodePopup.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { activeUser } from '$lib/stores/user.store.js';
     import { goToExternalLink } from '$lib/utils/general.js';
@@ -10,6 +10,8 @@
     import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
     import { MetaTags } from 'svelte-meta-tags';
     import { metaTags } from '$lib/constants/metadata.constant.js';
+    import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
+    import { STATUS_CODES } from '$lib/constants/status-codes.constant.js';
 
     export let data;
 
@@ -80,8 +82,8 @@
         </div>
         <Card class="w-[120px] h-[120px] flex items-center justify-center p-6 border-2 rounded-full">
             <div class="flex gap-1 items-end justify-center">
-                <h4 class="text-4xl font-bold">32</h4>
-                <p class="text-xs rounded-full text-muted-foreground pb-1">/52</p>
+                <h4 class="text-4xl font-bold">{user?.receivedCodes?.length ?? 0}</h4>
+                <p class="text-xs rounded-full text-muted-foreground pb-1">/{Object.keys(STATUS_CODES).length}</p>
             </div>
         </Card>
 
@@ -94,7 +96,13 @@
 
                 <status-code-list>
                     {#each newestStatusCodes as statusCode}
-                        <StatusCodeCard code={statusCode.code} receivedStatusCode={statusCode} {isActiveUser} />
+                        {#if isActiveUser}
+                            <AddStatusCodePopup code={statusCode.code} receivedStatusCode={statusCode} >
+                                <StatusCodeCard code={statusCode.code} />
+                            </AddStatusCodePopup>
+                        {:else}
+                            <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!statusCode} />
+                        {/if}
                     {/each}
                 </status-code-list>
             </status-codes-section>
@@ -109,7 +117,13 @@
                         <h3 class="text-2xl">{statusCodesGroupKey}</h3>
                         <status-code-list>
                             {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                                <StatusCodeCard code={statusCode.code} receivedStatusCode={statusCode} {isActiveUser} />
+                                {#if isActiveUser}
+                                    <AddStatusCodePopup code={statusCode.code} receivedStatusCode={statusCode} >
+                                        <StatusCodeCard code={statusCode.code} />
+                                    </AddStatusCodePopup>
+                                {:else}
+                                    <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!statusCode} />
+                                {/if}
                             {/each}
                         </status-code-list>
                     </div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import AddStatusCodePopup from '$lib/components/AddStatusCodePopup.svelte';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { Input } from '$lib/components/ui/input/index.js';
     import { ToggleGroup, ToggleGroupItem } from '$lib/components/ui/toggle-group';
@@ -82,7 +83,9 @@
                     <status-code-list>
                         {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
                             {@const code = $activeUser?.receivedCodes.find(code => code.code === statusCode.code)}
-                            <StatusCodeCard code={statusCode.code} receivedStatusCode={code} />
+                            <AddStatusCodePopup code={statusCode.code} receivedStatusCode={code} >
+                                <StatusCodeCard code={statusCode.code} receivedStatusCode={code} />
+                            </AddStatusCodePopup>
                         {/each}
                     </status-code-list>
                 </div>

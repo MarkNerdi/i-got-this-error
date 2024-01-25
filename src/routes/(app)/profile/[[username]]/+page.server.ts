@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         username = session?.user?.username;
     }
     if (!username) {
-        return redirect(300, '/');
+        return redirect(308, '/');
     }
 
     const user = await userController.getByUsername(username);
