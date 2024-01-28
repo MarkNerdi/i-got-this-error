@@ -13,15 +13,17 @@
 <DropdownMenu>
 	<DropdownMenuTrigger asChild let:builder>
 		<Button variant="ghost" builders={[builder]} class="relative">
-            <div class="flex flex-row items-center gap-2">
-			<Avatar class="h-8 w-8">
-				<AvatarImage src="{user.image}" alt="{user.username}" />
-				<AvatarFallback>SC</AvatarFallback>
-			</Avatar>
-            {#if expanded}
-                <h2>{user.username}</h2>
-				<p class="text-xs leading-none text-muted-foreground">{user.email}</p>
-            {/if}
+            <div class="flex flex-row items-center gap-4">
+                <Avatar class="h-8 w-8">
+                    <AvatarImage src="{user.image}" alt="{user.username}" />
+                    <AvatarFallback>SC</AvatarFallback>
+                </Avatar>
+                {#if expanded}
+                    <div class="flex flex-col items-start space-y-1">
+                        <h2>{user.username}</h2>
+                        <p class="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    </div>
+                {/if}
             </div>
 		</Button>
 	</DropdownMenuTrigger>

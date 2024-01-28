@@ -8,9 +8,9 @@
     export let hoverAnimation: boolean = true;
 </script>
 
-<Card class="relative h-full flex flex-col gap-2 justify-center items-center p-6 {hoverAnimation ? 'hover:bg-secondary cursor-pointer' : ''}">
-    <h3 class="text-2xl">{code}</h3>
-    <p class="text-sm text-muted-foreground text-center">{STATUS_CODES[code]?.title}</p>
+<Card class="relative h-full flex flex-col lg:gap-2 gap-1 justify-center items-center lg:p-6 p-4 {hoverAnimation ? 'hover:bg-secondary cursor-pointer' : ''}">
+    <h3 class="lg:text-2xl text-xl">{code}</h3>
+    <p class="lg:text-sm text-xs text-muted-foreground text-center">{STATUS_CODES[code]?.title}</p>
     {#if !!isReceivedByActiveUser}
         <CheckIcon class="absolute top-2 right-2 w-5 h-5" />
     {/if}

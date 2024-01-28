@@ -36,8 +36,8 @@
 <MetaTags {...metaTags} title={isActiveUser ? 'My Profile' : user?.username ?? 'Profile'} />
 
 <profile-view>
-    <div class="w-full max-w-[1000px] flex flex-row justify-between align-center p-6 pb-0">
-        <h2 class="text-3xl font-bold">{
+    <div class="w-full max-w-[1000px] flex flex-row justify-between align-center lg:p-6 p-4 pb-0">
+        <h2 class="lg:text-3xl font-bold text-xl">{
             isActiveUser
                 ? 'Your Profile'
                 : `${user?.username}'s Profile`
@@ -62,37 +62,36 @@
     </div>
 
     <progress-section >
-        <div class="flex gap-4">
-            <Avatar class="h-20 w-20">
+        <div class="flex items-center gap-4">
+            <Avatar class="lg:h-20 lg:w-20 w-12 h-12">
                 <AvatarImage src="{user?.image}" alt="{user?.username}" />
                 <AvatarFallback>SC</AvatarFallback>
             </Avatar>
             <div class="flex flex-col justify-center">
                 <div class="flex flex-row items-center">
-                    <h3 class="text-2xl font-bold items-start">{user?.username}</h3>
+                    <h3 class="lg:text-2xl text-xl font-bold items-start">{user?.username}</h3>
                     <Button on:click={() => goToExternalLink(user?.profileUrl ?? '')} variant="link">
                         <ExternalLink class="w-4 h-4" />
                     </Button>
                 </div>
-                <p class="text-sm rounded-full text-muted-foreground pb-1">
+                <p class="lg:text-sm text-xs rounded-full text-muted-foreground pb-1">
                     <span class="font-bold">{user?.amountFollowers}</span> {`follower${ user?.amountFollowers !== 1 ? 's' : '' }`} | 
                     <span class="font-bold">{user?.amountFollowings}</span> {`following${ user?.amountFollowings !== 1 ? 's' : '' }`} 
                 </p>
             </div>
         </div>
-        <Card class="w-[120px] h-[120px] flex items-center justify-center p-6 border-2 rounded-full">
+        <Card class="lg:w-[120px] lg:h-[120px] h-[75px] w-[75px] flex items-center justify-center lg:p-6 p-2 border-2 rounded-full">
             <div class="flex gap-1 items-end justify-center">
-                <h4 class="text-4xl font-bold">{user?.receivedCodes?.length ?? 0}</h4>
+                <h4 class="lg:text-4xl text-2xl font-bold">{user?.receivedCodes?.length ?? 0}</h4>
                 <p class="text-xs rounded-full text-muted-foreground pb-1">/{Object.keys(STATUS_CODES).length}</p>
             </div>
         </Card>
-
     </progress-section>
 
-    <div class="w-full flex-grow overflow-auto flex flex-col items-center gap-12">
+    <div class="w-full flex-grow overflow-auto flex flex-col items-center lg:gap-12 gap-6">
         {#if data.user?.receivedCodes?.length}
             <status-codes-section>
-                <h2 class="text-2xl font-bold">Newest Achievements</h2>
+                <h2 class="lg:text-2xl text-xl font-bold">Newest Achievements</h2>
 
                 <status-code-list>
                     {#each newestStatusCodes as statusCode}
@@ -110,12 +109,12 @@
         {/if}
 
         <status-codes-section>
-            <h2 class="text-2xl font-bold">All Achievements</h2>
+            <h2 class="lg:text-2xl text-xl font-bold">All Achievements</h2>
 
             <list-container>
                 {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
                     <div class="flex flex-col items-start gap-4">
-                        <h3 class="text-2xl">{statusCodesGroupKey}</h3>
+                        <h3 class="lg:text-2xl text-lg">{statusCodesGroupKey}</h3>
                         <status-code-list>
                             {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
                                 {#if isActiveUser}
@@ -153,11 +152,11 @@
     }
 
     progress-section {
-        @apply w-full max-w-[1000px] flex flex-row items-center justify-center gap-16 p-12;
+        @apply w-full max-w-[1000px] flex flex-row items-center justify-center lg:gap-16 gap-4 lg:p-12 p-4;
     }
 
     status-codes-section {
-        @apply w-full max-w-[1000px] flex-grow flex flex-col items-start gap-8 p-6;
+        @apply w-full max-w-[1000px] flex-grow flex flex-col items-start lg:gap-8 gap-4 lg:p-6 p-4;
     }
 
     list-container {
@@ -167,8 +166,7 @@
 
     status-code-list {
         @apply w-full ;
-        @apply grid gap-8;
-        grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
-        grid-auto-rows: 1fr;
+        @apply grid lg:grid-cols-6 grid-cols-3;
+        @apply lg:gap-8 gap-4;
     }
 </style>

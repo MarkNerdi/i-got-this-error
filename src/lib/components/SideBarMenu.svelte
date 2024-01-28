@@ -26,7 +26,7 @@
         <Menu class="w-8 h-8" />
     </Button>
   </Sheet.Trigger>
-  <Sheet.Content side="left" class="flex flex-col">
+  <Sheet.Content side="left" class="flex flex-col px-2">
     <Sheet.Header>
         <h2 class="text-xl">{'<i-got-this-error />'}</h2>
     </Sheet.Header>
