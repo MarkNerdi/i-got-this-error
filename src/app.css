@@ -78,6 +78,7 @@
     font-style: normal;
     font-family: 'Anonymous Pro';
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 ::-webkit-scrollbar {

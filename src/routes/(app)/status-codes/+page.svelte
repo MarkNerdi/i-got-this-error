@@ -50,7 +50,7 @@
 
 <status-codes-view>
     <div class="w-full flex flex-row justify-between align-center max-w-[1000px]">
-        <h2 class="text-3xl font-bold">Status codes</h2>
+        <h2 class="lg:text-3xl font-bold text-xl">Status codes</h2>
         
         <div class="flex gap-4 items-center">
             <Input placeholder="Search status codes" bind:value={searchTerm} />

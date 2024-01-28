@@ -21,25 +21,27 @@
 
 <users-view>
     <div class="w-full flex flex-row justify-between align-center">
-        <h2 class="text-3xl font-bold">Devs ⋅ {data.users.total}</h2>
+        <h2 class="lg:text-3xl font-bold text-xl">Devs ⋅ {data.users.total}</h2>
     </div>
 
-    <user-list>
-        {#each data.users.list as user}
-            <Card on:click={() => goto(`/profile/${user.username}`)} class="flex flex-col justify-center items-center p-6 hover:bg-secondary cursor-pointer gap-2">
-                <img src={user.image} alt={user.username} class="w-24 h-24 rounded-full" />
-                <p class="text-center font-bold">{user.username}</p>
-            </Card>
-        {:else}
-            <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
-                <Users class="w-20 h-20 mb-4" />
-                <h3 class="text-lg font-semibold">No users found</h3>
-                <p class="text-sm text-muted-foreground">
-                    There's no user called like this.
-                </p>
-            </div>
-        {/each}
-    </user-list>
+    <div class="w-full flex-grow">
+        <user-list>
+            {#each data.users.list as user}
+                <Card on:click={() => goto(`/profile/${user.username}`)} class="flex flex-col justify-center items-center lg:p-6 p-4 hover:bg-secondary cursor-pointer gap-2">
+                    <img src={user.image} alt={user.username} class="lg:w-24 lg:h-24 w-16 h-16 rounded-full" />
+                    <p class="text-center font-bold lg:text-base text-sm">{user.username}</p>
+                </Card>
+            {:else}
+                <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
+                    <Users class="lg:w-20 lg:h-20 w-8 h-8 mb-4" />
+                    <h3 class="text-lg font-semibold">No users found</h3>
+                    <p class="text-sm text-muted-foreground">
+                        There's no user called like this.
+                    </p>
+                </div>
+            {/each}
+        </user-list>
+    </div>
     {#if data.users.list.length}
         <PaginationFooter count={data.users.total} onPageClick={gotoPage} />
     {/if}
@@ -48,12 +50,12 @@
 
 <style lang="postcss">
     users-view {
-        @apply w-full h-full max-w-[1000px] p-6;
-        @apply flex flex-col justify-center items-start gap-8;
+        @apply w-full h-full max-w-[1000px] lg:p-6 p-4;
+        @apply flex flex-col justify-center items-start lg:gap-8 gap-4;
     }
 
     user-list {
-        @apply w-full flex-grow;
-        @apply flex flex-wrap gap-16 justify-start items-start;
+        @apply w-full;
+        @apply grid grid-cols-3 lg:grid-cols-5 lg:gap-8 gap-4;
     }
 </style>
