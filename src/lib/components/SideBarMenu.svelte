@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button } from '$lib/components/ui/button';
-    import { Code, ExternalLink, Github, Menu, User2, Users } from 'lucide-svelte';
+    import { Code, ExternalLink, Github, Home, Menu, User2, Users } from 'lucide-svelte';
     import * as Sheet from '$lib/components/ui/sheet';
     import UserNav from '$lib/components/UserNav.svelte';
     import { activeUser } from '$lib/stores/user.store';
@@ -33,6 +33,10 @@
     <Separator />
     <div class="flex-grow flex flex-col space-y-4 py-4">
         <div class="space-y-1">
+            <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('/')} >
+                <Home class="w-4 h-4 mr-2" />
+                Home
+            </Button>
             {#if $activeUser}
                 <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('/profile')} >
                     <User2 class="w-4 h-4 mr-2" />
