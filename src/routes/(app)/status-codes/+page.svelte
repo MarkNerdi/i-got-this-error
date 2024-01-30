@@ -9,7 +9,7 @@
     import type { StatusCode } from '$lib/server/status/status-code.type.js';
     import { activeUser } from '$lib/stores/user.store.js';
     import { isMobile } from '$lib/stores/window.store.js';
-    import { Filter, ListFilter } from 'lucide-svelte';
+    import { Bird, ListFilter } from 'lucide-svelte';
     import { MetaTags } from 'svelte-meta-tags';
 
     export let data;
@@ -97,21 +97,31 @@
     </header-section>
 
     <div class="w-full h-full flex flex-row justify-center items-start overflow-auto">
-        <list-container>
-            {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
-                <div class="flex flex-col items-start gap-4">
-                    <h3 class="lg:text-2xl text-lg">{statusCodesGroupKey}</h3>
-                    <status-code-list>
-                        {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
-                            {@const code = $activeUser?.receivedCodes.find(code => code.code === statusCode.code)}
-                            <AddStatusCodePopup code={statusCode.code} receivedStatusCode={code} >
-                                <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!code} />
-                            </AddStatusCodePopup>
-                        {/each}
-                    </status-code-list>
-                </div>
-            {/each}
-        </list-container>
+        {#if Object.keys(groupedStatusCodes).length}
+            <list-container>
+                {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
+                    <div class="flex flex-col items-start gap-4">
+                        <h3 class="lg:text-2xl text-lg">{statusCodesGroupKey}</h3>
+                        <status-code-list>
+                            {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
+                                {@const code = $activeUser?.receivedCodes.find(code => code.code === statusCode.code)}
+                                <AddStatusCodePopup code={statusCode.code} receivedStatusCode={code} >
+                                    <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!code} />
+                                </AddStatusCodePopup>
+                            {/each}
+                        </status-code-list>
+                    </div>
+                {/each}
+            </list-container>
+        {:else}
+            <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
+                <Bird class="lg:w-20 lg:h-20 w-8 h-8 mb-4" />
+                <h3 class="text-lg font-semibold">No status found</h3>
+                <p class="text-sm text-muted-foreground">
+                    Please search for something else.
+                </p>
+            </div>
+        {/if}
     </div>
 </status-codes-view>
 
