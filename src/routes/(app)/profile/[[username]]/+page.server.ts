@@ -3,13 +3,15 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { userCollection } from '$lib/server/db';
 import { ObjectId } from 'mongodb';
+import type { UserModel } from '$lib/server/users/users.types.js';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
     const session = await locals.getSession();
+    const currentUser = session?.user as UserModel | undefined;
 
     let username = params?.username;
     if (!username) {
-        username = session?.user?.username;
+        username = currentUser?.username;
     }
     if (!username) {
         return redirect(308, '/');
@@ -24,7 +26,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         profileUrl: user.profileUrl,
         username: user.username,
         image: user.image,
-        isFollowed: session?.user?.followings?.some(following => following.toString() === user._id.toString()),
+        isFollowed: currentUser?.followings?.some(following => following.toString() === user._id?.toString()),
         receivedCodes: user.receivedCodes ?? [],
         amountFollowers: user.followers?.length ?? 0,
         amountFollowings: user.followings?.length ?? 0,
@@ -46,25 +48,46 @@ export const actions = {
             return fail(400);
         }
 
-        const user = await userController.getByUsername(username);
-        if (!user) {
+        const otherUser = await userController.getByUsername(username);
+        const currentUser = session.user as UserModel;
+        if (!otherUser) {
             return fail(400);
         }
 
         if (follow) {
-            if (!session.user.followings?.some(following => following.toString() === user._id.toString())) {
-                await userCollection.updateOne({ _id: new ObjectId(session.user._id) }, { $push: { followings: new ObjectId(user._id) } });        
-            }
-            if (!user.followers?.some(follower => follower.toString() === session.user?._id.toString())) {
-                await userCollection.updateOne({ _id: new ObjectId(user._id) }, { $push: { followers: new ObjectId(session.user._id) } });        
-            }
+            await userCollection.updateOne({ _id: new ObjectId(currentUser._id) }, {
+                $addToSet: {
+                    followings: {
+                        id: new ObjectId(otherUser._id),
+                        username: otherUser.username,
+                        image: otherUser.image,
+                    },
+                },
+            });        
+            await userCollection.updateOne({ _id: new ObjectId(otherUser._id) }, {
+                $addToSet: {
+                    followers: {
+                        id: new ObjectId(currentUser._id),
+                        username: currentUser.username,
+                        image: currentUser.image,
+                    },
+                },
+            });        
         } else {
             
-            if (session.user.followings?.some(following => following.toString() === user._id.toString())) {
-                await userCollection.updateOne({ _id: new ObjectId(session.user._id) }, { $pull: { followings: new ObjectId(user._id) } });        
+            if (currentUser.followings?.some(following => following.toString() === otherUser._id?.toString())) {
+                await userCollection.updateOne({ _id: new ObjectId(currentUser._id) }, {
+                    $pull: {
+                        followings: { id: new ObjectId(otherUser._id) },
+                    },
+                });        
             }
-            if (user.followers?.some(follower => follower.toString() === session.user?._id.toString())) {
-                await userCollection.updateOne({ _id: new ObjectId(user._id) }, { $pull: { followers: new ObjectId(session.user._id) } });        
+            if (otherUser.followers?.some(follower => follower.toString() === currentUser._id?.toString())) {
+                await userCollection.updateOne({ _id: new ObjectId(otherUser._id) }, {
+                    $pull: {
+                        followers: { id: new ObjectId(currentUser._id) },
+                    },
+                });        
             }
         }
 

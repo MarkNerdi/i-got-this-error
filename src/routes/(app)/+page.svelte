@@ -9,8 +9,6 @@
     import { MetaTags } from 'svelte-meta-tags';
     
     export let data;
-
-    $: console.log($isDesktop);
 </script>
 
 <MetaTags {...metaTags} title='Track your progress' />
