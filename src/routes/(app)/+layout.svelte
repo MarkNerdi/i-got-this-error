@@ -18,7 +18,7 @@
             {#if $isMobile}
                 <SideBarMenu />
             {:else}
-                <a href="/">
+                <a href="/" data-sveltekit-preload-data="hover">
                     <h2 class="text-3xl">{'<i-got-this-error />'}</h2>
                 </a>
                 <div class="flex items-center gap-4">

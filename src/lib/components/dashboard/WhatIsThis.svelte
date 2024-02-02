@@ -2,7 +2,7 @@
     import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 </script>
 
-<Card class="col-span-2">
+<Card class="h-full w-full">
     <CardHeader>
         <CardTitle>What is this?</CardTitle>
     </CardHeader>

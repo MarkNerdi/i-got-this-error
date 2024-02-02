@@ -7,7 +7,7 @@
     export let statusCodes: (StatusCode & { percentage: number })[];
 </script>
 
-<Card class="col-span-4">
+<Card class="h-full w-full">
     <CardHeader>
         <CardTitle>Feed</CardTitle>
         <CardDescription>Look what your friends achieved</CardDescription>

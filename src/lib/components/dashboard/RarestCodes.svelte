@@ -7,7 +7,7 @@
     export let statusCodes: (StatusCode & { percentage: number })[];
 </script>
 
-<Card class="col-span-3">
+<Card class="h-full w-full">
     <CardHeader>
         <CardTitle>Rarest status codes</CardTitle>
         <CardDescription>Only for the most experienced devs</CardDescription>

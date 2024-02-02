@@ -4,19 +4,44 @@
     import StatusOfTheDay from '$lib/components/dashboard/StatusOfTheDay.svelte';
     import WhatIsThis from '$lib/components/dashboard/WhatIsThis.svelte';
     import { metaTags } from '$lib/constants/metadata.constant.js';
+    import { activeUser } from '$lib/stores/user.store.js';
+    import { isDesktop } from '$lib/stores/window.store.js';
     import { MetaTags } from 'svelte-meta-tags';
     
     export let data;
+
+    $: console.log($isDesktop);
 </script>
 
 <MetaTags {...metaTags} title='Track your progress' />
 
 <home-view>
-    <div class="w-full grid gap-16 grid-cols-6">
-        <WhatIsThis />
-        <Feed statusCodes={data.rarestStatusCodes} />
-        <RarestCodes statusCodes={data.rarestStatusCodes} />
-        <StatusOfTheDay code={data.todaysStatusCode.code} />
+    <div class="w-full grid lg:gap-16 gap-8 lg:grid-cols-6 grid-cols-1 p-4 overflow-auto">
+        {#if $isDesktop}
+            <div class="lg:col-span-2">
+                <WhatIsThis />
+            </div>
+            <div class="lg:col-span-4">
+                <Feed statusCodes={data.rarestStatusCodes} />
+            </div>
+            <div class="lg:col-span-3">
+                <RarestCodes statusCodes={data.rarestStatusCodes} />
+            </div>
+            <div class="lg:col-span-3">
+                <StatusOfTheDay code={data.todaysStatusCode.code} />
+            </div>
+        {:else}
+            {#if $activeUser}
+                <Feed statusCodes={data.rarestStatusCodes} />
+            {:else}
+                <WhatIsThis />
+            {/if}
+            <StatusOfTheDay code={data.todaysStatusCode.code} />
+            {#if $activeUser}
+                <WhatIsThis />
+            {/if}
+            <RarestCodes statusCodes={data.rarestStatusCodes} />
+        {/if}
     </div>
 </home-view>
 
