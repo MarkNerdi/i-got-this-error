@@ -1,14 +1,11 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import LoginButton from '$lib/components/LoginButton.svelte';
     import SideBarMenu from '$lib/components/SideBarMenu.svelte';
     import UserNav from '$lib/components/UserNav.svelte';
-    import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
     import { metaTags } from '$lib/constants/metadata.constant';
     import { activeUser } from '$lib/stores/user.store';
     import { isMobile } from '$lib/stores/window.store';
-    import { goToExternalLink } from '$lib/utils/general';
     import { ExternalLink } from 'lucide-svelte';
     import { MetaTags } from 'svelte-meta-tags';
 </script>
@@ -26,17 +23,14 @@
                 </a>
                 <div class="flex items-center gap-4">
                     {#if $activeUser}
-                        <Button on:click={() => goto('/profile')} variant="link">My Profile</Button>
+                        <a href="/profile" class="header-link" data-sveltekit-preload-data="hover">My Profile</a>
                     {/if}
-                    <Button on:click={() => goto('/status-codes')} variant="link">Status codes</Button>
-                    <Button on:click={() => goto('/devs?page=1')} variant="link">Community</Button>
-                    <Button
-                        on:click={() => goToExternalLink('https://github.com/MarkNerdi/i-got-this-error')}
-                        variant="link"
-                    >
+                    <a href="/status-codes" class="header-link" data-sveltekit-preload-data="hover">Status codes</a>
+                    <a href="/devs?page=1" class="header-link" data-sveltekit-preload-data="hover">Community</a>
+                    <a href="https://github.com/MarkNerdi/i-got-this-error" target="_blank" rel="noreferrer noopener" class="header-link flex">
                         Contribute!
                         <ExternalLink class="w-4 h-4 ml-1" />
-                    </Button>
+                    </a>
                 </div>
             {/if}
         </div>
@@ -64,6 +58,12 @@
         @apply flex justify-between items-center gap-4;
         @apply bg-white dark:bg-black;
         @apply border-b border-solid border-border;
+    }
+
+    .header-link {
+        @apply py-2 px-4;
+        @apply text-sm underline-offset-4;
+        @apply hover:underline
     }
 
     main {
