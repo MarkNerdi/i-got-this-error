@@ -28,10 +28,12 @@
         {#if data.users.list.length}
             <user-list>
                 {#each data.users.list as user}
-                    <Card on:click={() => goto(`/profile/${user.username}`)} class="flex flex-col justify-center items-center lg:p-6 p-4 hover:bg-secondary cursor-pointer gap-2">
-                        <img src={user.image} alt={user.username} class="lg:w-24 lg:h-24 w-16 h-16 rounded-full" />
-                        <p class="text-center font-bold lg:text-base text-sm">{user.username}</p>
-                    </Card>
+                    <a href="/profile/{user.username}" data-sveltekit-preload-data="hover">
+                        <Card class="flex flex-col justify-center items-center lg:p-6 p-4 hover:bg-secondary cursor-pointer gap-2">
+                            <img src={user.image} alt={user.username} class="lg:w-24 lg:h-24 w-16 h-16 rounded-full" />
+                            <p class="text-center font-bold lg:text-base text-sm">{user.username}</p>
+                        </Card>
+                    </a>
                 {/each}
             </user-list>
         {:else}
