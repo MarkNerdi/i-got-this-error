@@ -12,11 +12,11 @@
         <CardTitle>Rarest status codes</CardTitle>
         <CardDescription>Only for the most experienced devs</CardDescription>
     </CardHeader>
-    <CardContent class="grid gap-6">
+    <CardContent class="space-y-4">
         {#each statusCodes as statusCode}
             <div class="w-full flex flex-row justify-between">
                 <div class="w-full flex flex-row items-center">
-                    <Avatar class="w-8 h-8">
+                    <Avatar class="w-10 h-10">
                         <AvatarFallback>{statusCode.code}</AvatarFallback>
                     </Avatar>
                     <h3 class="text-base ml-4">{STATUS_CODES[statusCode.code]?.title}</h3>

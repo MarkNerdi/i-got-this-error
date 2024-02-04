@@ -10,7 +10,6 @@ export type UserModel = {
     image: string;
 
     receivedCodes: ReceivedCode[];
-    feed: FeedEntry[];
 
     followers: OtherUser[];
     followings: OtherUser[];
@@ -21,14 +20,6 @@ export type UserModel = {
 export type ReceivedCode = {
     code: string;
     note: string;
-    receivedAt: number;
-}
-
-export type FeedEntry = {
-    userId: ObjectId | string;
-    username: string;
-    image: string;
-    code: string;
     receivedAt: number;
 }
 

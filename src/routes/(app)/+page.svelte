@@ -14,13 +14,17 @@
 <MetaTags {...metaTags} title='Track your progress' />
 
 <home-view>
-    <div class="w-full grid lg:gap-16 gap-8 lg:grid-cols-6 grid-cols-1 p-4 overflow-auto">
+    <div class="w-full grid lg:gap-8 gap-4 lg:grid-cols-6 grid-cols-1 lg:p-8 p-4 overflow-auto">
         {#if $isDesktop}
             <div class="lg:col-span-2">
                 <WhatIsThis />
             </div>
             <div class="lg:col-span-4">
-                <Feed statusCodes={data.rarestStatusCodes} />
+                {#if data.feed}
+                    <Feed feed={data.feed} />
+                {:else}
+                     <!-- else content here -->
+                {/if}
             </div>
             <div class="lg:col-span-3">
                 <RarestCodes statusCodes={data.rarestStatusCodes} />
@@ -29,8 +33,8 @@
                 <StatusOfTheDay code={data.todaysStatusCode.code} />
             </div>
         {:else}
-            {#if $activeUser}
-                <Feed statusCodes={data.rarestStatusCodes} />
+            {#if $activeUser && data.feed}
+                <Feed feed={data.feed} />
             {:else}
                 <WhatIsThis />
             {/if}

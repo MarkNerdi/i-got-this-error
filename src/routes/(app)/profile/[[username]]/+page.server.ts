@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         profileUrl: user.profileUrl,
         username: user.username,
         image: user.image,
-        isFollowed: currentUser?.followings?.some(following => following.toString() === user._id?.toString()),
+        isFollowed: currentUser?.followings?.some(following => following.id.toString() === user._id?.toString()),
         receivedCodes: user.receivedCodes ?? [],
         amountFollowers: user.followers?.length ?? 0,
         amountFollowings: user.followings?.length ?? 0,
@@ -74,21 +74,16 @@ export const actions = {
                 },
             });        
         } else {
-            
-            if (currentUser.followings?.some(following => following.toString() === otherUser._id?.toString())) {
-                await userCollection.updateOne({ _id: new ObjectId(currentUser._id) }, {
-                    $pull: {
-                        followings: { id: new ObjectId(otherUser._id) },
-                    },
-                });        
-            }
-            if (otherUser.followers?.some(follower => follower.toString() === currentUser._id?.toString())) {
-                await userCollection.updateOne({ _id: new ObjectId(otherUser._id) }, {
-                    $pull: {
-                        followers: { id: new ObjectId(currentUser._id) },
-                    },
-                });        
-            }
+            await userCollection.updateOne({ _id: new ObjectId(currentUser._id) }, {
+                $pull: {
+                    followings: { id: new ObjectId(otherUser._id) },
+                },
+            });        
+            await userCollection.updateOne({ _id: new ObjectId(otherUser._id) }, {
+                $pull: {
+                    followers: { id: new ObjectId(currentUser._id) },
+                },
+            });        
         }
 
         return { success: true };
