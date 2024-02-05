@@ -53,7 +53,7 @@
                     </Button>
                 {:else}
                     <Button variant="secondary" type="submit">
-                        <ThumbsUp class="w-4 h-4 mr-3" />
+                        <ThumbsUp class="size-4 mr-3" />
                         Follow
                     </Button>
                 {/if}
@@ -63,7 +63,7 @@
 
     <progress-section >
         <div class="flex items-center gap-4">
-            <Avatar class="lg:h-20 lg:w-20 w-12 h-12">
+            <Avatar class="lg:size-20 size-12">
                 <AvatarImage src="{user?.image}" alt="{user?.username}" />
                 <AvatarFallback>SC</AvatarFallback>
             </Avatar>
@@ -71,7 +71,7 @@
                 <div class="flex flex-row items-center">
                     <h3 class="lg:text-2xl text-xl font-bold items-start">{user?.username}</h3>
                     <Button on:click={() => goToExternalLink(user?.profileUrl ?? '')} variant="link">
-                        <ExternalLink class="w-4 h-4" />
+                        <ExternalLink class="size-4" />
                     </Button>
                 </div>
                 <p class="lg:text-sm text-xs rounded-full text-muted-foreground pb-1">
@@ -80,7 +80,7 @@
                 </p>
             </div>
         </div>
-        <Card class="lg:w-[120px] lg:h-[120px] h-[75px] w-[75px] flex items-center justify-center lg:p-6 p-2 border-2 rounded-full">
+        <Card class="lg:size-[120px] size-[75px] flex items-center justify-center lg:p-6 p-2 border-2 rounded-full">
             <div class="flex gap-1 items-end justify-center">
                 <h4 class="lg:text-4xl text-2xl font-bold">{user?.receivedCodes?.length ?? 0}</h4>
                 <p class="text-xs rounded-full text-muted-foreground pb-1">/{Object.keys(STATUS_CODES).length}</p>
@@ -129,8 +129,8 @@
                         </status-code-list>
                     </div>
                 {:else}
-                    <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
-                        <Trophy class="w-20 h-20 mb-4" />
+                    <div class="size-full flex flex-col justify-center items-center p-6 gap-2">
+                        <Trophy class="size-20 mb-4" />
                         <h3 class="text-lg font-semibold">No achievements</h3>
                         <p class="text-sm text-muted-foreground">
                             {isActiveUser ?
@@ -147,7 +147,7 @@
 
 <style lang="postcss">
     profile-view {
-        @apply w-full h-full;
+        @apply size-full;
         @apply flex flex-col items-center justify-start;
     }
 

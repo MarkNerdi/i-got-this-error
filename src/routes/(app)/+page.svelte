@@ -49,7 +49,7 @@
 
 <style lang="postcss">
     home-view {
-        @apply w-full h-full max-w-[1200px];
+        @apply size-full max-w-[1200px];
         @apply flex flex-col justify-center items-center gap-16;
     }
 </style>

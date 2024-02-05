@@ -23,7 +23,7 @@
 <Sheet.Root bind:open>
   <Sheet.Trigger asChild let:builder>
     <Button builders={[builder]} variant="ghost" class="px-0">
-        <Menu class="w-8 h-8" />
+        <Menu class="size-8" />
     </Button>
   </Sheet.Trigger>
   <Sheet.Content side="left" class="flex flex-col px-2">
@@ -34,30 +34,30 @@
     <div class="flex-grow flex flex-col space-y-4 py-4">
         <div class="space-y-1">
             <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('/')} >
-                <Home class="w-4 h-4 mr-2" />
+                <Home class="size-4 mr-2" />
                 Home
             </Button>
             {#if $activeUser}
                 <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('/profile')} >
-                    <User2 class="w-4 h-4 mr-2" />
+                    <User2 class="size-4 mr-2" />
                     My Profile
                 </Button>
             {/if}
             <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('/status-codes')}>
-                <Code class="w-4 h-4 mr-2" />
+                <Code class="size-4 mr-2" />
                 Status Codes
             </Button>
             <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('/devs')}>
-                <Users class="w-4 h-4 mr-2" />
+                <Users class="size-4 mr-2" />
                 Community
             </Button>
         </div>
         <Separator />
         <div class="space-y-1">
             <Button variant="ghost" class="w-full justify-start" on:click={() => onMenuItemClick('https://github.com/MarkNerdi/i-got-this-error', true)}>
-                <Github class="w-4 h-4 mr-2" />
+                <Github class="size-4 mr-2" />
                 Contribute
-                <ExternalLink class="w-4 h-4 ml-1" />
+                <ExternalLink class="size-4 ml-1" />
             </Button>
         </div>
     </div>

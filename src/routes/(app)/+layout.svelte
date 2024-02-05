@@ -29,7 +29,7 @@
                     <a href="/devs?page=1" class="header-link" data-sveltekit-preload-data="hover">Community</a>
                     <a href="https://github.com/MarkNerdi/i-got-this-error" target="_blank" rel="noreferrer noopener" class="header-link flex">
                         Contribute!
-                        <ExternalLink class="w-4 h-4 ml-1" />
+                        <ExternalLink class="size-4 ml-1" />
                     </a>
                 </div>
             {/if}

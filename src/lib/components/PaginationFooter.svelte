@@ -11,7 +11,7 @@
     <Pagination.Content>
         <Pagination.Item>
         <Pagination.PrevButton on:click={() => onPageClick((currentPage ?? 0) - 1)}>
-            <ChevronLeft class="h-4 w-4" />
+            <ChevronLeft class="size-4" />
             <span class="hidden sm:block">Previous</span>
         </Pagination.PrevButton>
         </Pagination.Item>
@@ -31,7 +31,7 @@
         <Pagination.Item>
         <Pagination.NextButton on:click={() => onPageClick((currentPage ?? 0) + 1)}>
             <span class="hidden sm:block">Next</span>
-            <ChevronRight class="h-4 w-4" />
+            <ChevronRight class="size-4" />
         </Pagination.NextButton>
         </Pagination.Item>
     </Pagination.Content>

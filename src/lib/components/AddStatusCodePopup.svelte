@@ -43,7 +43,7 @@
                 </Dialog.Description>
             </Dialog.Header>
             <div class="relative flex flex-col items-center gap-8 py-4">
-                <Card class="w-[120px] h-[120px] flex flex-col items-center justify-center p-6">
+                <Card class="size-[120px] flex flex-col items-center justify-center p-6">
                     <h3 class="text-2xl">{code}</h3>
                     <p class="text-sm text-center">{STATUS_CODES[code]?.title}</p>
                 </Card>
@@ -51,7 +51,7 @@
 
                 {#if receivedStatusCode}
                     <Toggle bind:pressed={editMode} class="absolute top-2 right-2">
-                        <Pencil class="h-4 w-4" />
+                        <Pencil class="size-4" />
                     </Toggle>
 
                     <div class="w-full flex flex-col gap-2">

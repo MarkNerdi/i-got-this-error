@@ -37,7 +37,7 @@
 
 </script>
 
-<Card class="h-full w-full">
+<Card class="size-full">
     <CardHeader>
         <CardTitle>Feed</CardTitle>
         <CardDescription>Look what your friends achieved</CardDescription>
@@ -46,7 +46,7 @@
         {#each feed as feedEntry}
             <div class="w-full flex flex-row justify-between lg:gap-8 gap-4">
                 <div class="flex flex-row items-center gap-4">
-                    <Avatar class="lg:w-12 lg:h-12 w-8 h-8">
+                    <Avatar class="lg:size-12 size-8">
                         <AvatarFallback>{feedEntry.receivedCode.code}</AvatarFallback>
                     </Avatar>
                     <div>
@@ -60,7 +60,7 @@
                         <h3 class="lg:text-sm text-xs">{feedEntry.username}</h3>
                         <p class="col-span-1 lg:text-xs text-xs text-muted-foreground">{getDateString(feedEntry.receivedCode.receivedAt)}</p>
                     </div>
-                    <Avatar class="lg:w-8 lg:h-8 h-6 w-6">
+                    <Avatar class="lg:size-8 size-6">
                         <AvatarImage src="{feedEntry.image}" alt="{feedEntry.username}" />
                         <AvatarFallback>SC</AvatarFallback>
                     </Avatar>

@@ -12,6 +12,6 @@
     <h3 class="lg:text-2xl text-xl">{code}</h3>
     <p class="lg:text-sm text-xs text-muted-foreground text-center">{STATUS_CODES[code]?.title}</p>
     {#if !!isReceivedByActiveUser}
-        <CheckIcon class="absolute top-2 right-2 w-5 h-5" />
+        <CheckIcon class="absolute top-2 right-2 size-5" />
     {/if}
 </Card>

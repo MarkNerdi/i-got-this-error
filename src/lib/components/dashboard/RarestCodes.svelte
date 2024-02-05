@@ -7,7 +7,7 @@
     export let statusCodes: (StatusCode & { percentage: number })[];
 </script>
 
-<Card class="h-full w-full">
+<Card class="size-full">
     <CardHeader>
         <CardTitle>Rarest status codes</CardTitle>
         <CardDescription>Only for the most experienced devs</CardDescription>
@@ -16,7 +16,7 @@
         {#each statusCodes as statusCode}
             <div class="w-full flex flex-row justify-between">
                 <div class="w-full flex flex-row items-center">
-                    <Avatar class="w-10 h-10">
+                    <Avatar class="size-10">
                         <AvatarFallback>{statusCode.code}</AvatarFallback>
                     </Avatar>
                     <h3 class="text-base ml-4">{STATUS_CODES[statusCode.code]?.title}</h3>

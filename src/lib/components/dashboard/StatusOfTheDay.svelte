@@ -5,7 +5,7 @@
     export let code: string;
 </script>
 
-<Card class="h-full w-full">
+<Card class="size-full">
     <CardHeader>
         <CardTitle>Status of the Day</CardTitle>
     </CardHeader>

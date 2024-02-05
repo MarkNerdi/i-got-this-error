@@ -62,7 +62,7 @@
             {#if $isMobile}
                 <div class="flex gap-2 items-center">
                     <Toggle bind:pressed={showFilter} >
-                        <ListFilter class="w-4 h-4" />
+                        <ListFilter class="size-4" />
                     </Toggle>
                     <Input placeholder="Search..." bind:value={searchTerm} />
                 </div>
@@ -96,7 +96,7 @@
         {/if}
     </header-section>
 
-    <div class="w-full h-full flex flex-row justify-center items-start overflow-auto">
+    <div class="size-full flex flex-row justify-center items-start overflow-auto">
         {#if Object.keys(groupedStatusCodes).length}
             <list-container>
                 {#each Object.keys(groupedStatusCodes) as statusCodesGroupKey}
@@ -114,8 +114,8 @@
                 {/each}
             </list-container>
         {:else}
-            <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
-                <Bird class="lg:w-20 lg:h-20 w-8 h-8 mb-4" />
+            <div class="size-full flex flex-col justify-center items-center p-6 gap-2">
+                <Bird class="lg:size-20 size-8 mb-4" />
                 <h3 class="text-lg font-semibold">No status found</h3>
                 <p class="text-sm text-muted-foreground">
                     Please search for something else.
@@ -128,7 +128,7 @@
 
 <style lang="postcss">
     status-codes-view {
-        @apply w-full h-full lg:py-6 py-4;
+        @apply size-full lg:py-6 py-4;
         @apply flex flex-col justify-center items-center lg:gap-8 gap-4;
     }
 

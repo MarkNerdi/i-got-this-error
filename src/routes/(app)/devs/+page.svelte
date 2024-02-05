@@ -30,15 +30,15 @@
                 {#each data.users.list as user}
                     <a href="/profile/{user.username}" data-sveltekit-preload-data="hover">
                         <Card class="flex flex-col justify-center items-center lg:p-6 p-4 hover:bg-secondary cursor-pointer gap-2">
-                            <img src={user.image} alt={user.username} class="lg:w-24 lg:h-24 w-16 h-16 rounded-full" />
+                            <img src={user.image} alt={user.username} class="lg:size-24 size-16 rounded-full" />
                             <p class="text-center font-bold lg:text-base text-sm">{user.username}</p>
                         </Card>
                     </a>
                 {/each}
             </user-list>
         {:else}
-            <div class="h-full w-full flex flex-col justify-center items-center p-6 gap-2">
-                <Users class="lg:w-20 lg:h-20 w-8 h-8 mb-4" />
+            <div class="size-full flex flex-col justify-center items-center p-6 gap-2">
+                <Users class="lg:size-20 size-8 mb-4" />
                 <h3 class="text-lg font-semibold">No users found</h3>
                 <p class="text-sm text-muted-foreground">
                     There's no user called like this.
@@ -54,7 +54,7 @@
 
 <style lang="postcss">
     users-view {
-        @apply w-full h-full max-w-[1000px] lg:p-6 p-4;
+        @apply size-full max-w-[1000px] lg:p-6 p-4;
         @apply flex flex-col justify-center items-start lg:gap-8 gap-4;
     }
 
