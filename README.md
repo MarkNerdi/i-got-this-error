@@ -18,37 +18,18 @@ This is a online bucketlist platform to keep track of all HTTP status codes a de
 
 #### Prerequisites
 
-- `yarn` needs to be installed
-- Have a MongoDB (either locally or hosted) and make sure you can connect to it locally
-- Have a Github OAuth app created on your Github profile
+- Docker
+- Docker Compose
+- [GitHub OAuth App](https://github.com/settings/developers)
 
 ### Setup
 
-Create a `.env` file in the root folder with the following structure:
+- Fill GitHub OAuth environment variables in `docker-compose.yml`
+
+- Run the command to start Docker Compose:
 
 ```
-PRIVATE_DB_CONNECTION_STRING=
-PRIVATE_DB_NAME=
-
-# Auth.js secret
-AUTH_SECRET=
-
-# Github client OAuth credentials
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
+docker-compose up -d
 ```
 
-After the intial run of:
-
-```
-yarn 
-```
-
-
-run the start command:
-
-```
-yarn dev
-```
-
-and the web application is reachable on `http:localhost:5173`
+- The web application will be reachable on `http://localhost:5173`
