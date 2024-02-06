@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "5173:5173"
+    environment:
+      - PRIVATE_DB_CONNECTION_STRING=mongodb://myuser:mypassword@mongo:27017/mydatabase
+      - PRIVATE_DB_NAME=mydatabase
+      - AUTH_SECRET=your_auth_secret
+      - GITHUB_CLIENT_ID=your_github_client_id
+      - GITHUB_CLIENT_SECRET=your_github_client_secret
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rootuser
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+      MONGO_INITDB_DATABASE: mydatabase
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+volumes:
+  mongo-data:
