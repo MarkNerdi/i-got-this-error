@@ -31,7 +31,7 @@ export const load: PageServerLoad = async ({ locals }) => {
     const todaysRandomNumber = Math.floor(getDateAsNumber(new Date()) % statusCodes.length);
     const todaysStatusCode = statusCodes[todaysRandomNumber];
 
-    let feed: FeedEntry[] | undefined = undefined;
+    let feed: FeedEntry[] = [];
     const currentUser = session?.user as UserModel | undefined;
     if (currentUser) {
         const followingIds = currentUser.followings?.map(following => new ObjectId(following.id));

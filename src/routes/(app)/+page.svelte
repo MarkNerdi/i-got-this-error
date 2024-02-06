@@ -1,5 +1,6 @@
 <script lang="ts">
     import Feed from '$lib/components/dashboard/Feed.svelte';
+    import LoginCard from '$lib/components/dashboard/LoginCard.svelte';
     import RarestCodes from '$lib/components/dashboard/RarestCodes.svelte';
     import StatusOfTheDay from '$lib/components/dashboard/StatusOfTheDay.svelte';
     import WhatIsThis from '$lib/components/dashboard/WhatIsThis.svelte';
@@ -20,10 +21,10 @@
                 <WhatIsThis />
             </div>
             <div class="lg:col-span-4">
-                {#if data.feed}
+                {#if $activeUser}
                     <Feed feed={data.feed} />
                 {:else}
-                     <!-- else content here -->
+                    <LoginCard />
                 {/if}
             </div>
             <div class="lg:col-span-3">
@@ -33,10 +34,11 @@
                 <StatusOfTheDay code={data.todaysStatusCode.code} />
             </div>
         {:else}
-            {#if $activeUser && data.feed}
+            {#if $activeUser}
                 <Feed feed={data.feed} />
             {:else}
                 <WhatIsThis />
+                <LoginCard />
             {/if}
             <StatusOfTheDay code={data.todaysStatusCode.code} />
             {#if $activeUser}
