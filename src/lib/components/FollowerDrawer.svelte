@@ -50,7 +50,7 @@
                         <p class="text-sm text-muted-foreground text-center">
                             You're not following anyone yet. Check out our Community!
                         </p>
-                        <a href="/devs?page=1" class="px-4 py-2 underline-offset-4 hover:underline">Go to Community</a>
+                        <a href="/devs?page=1" on:click={() => $followersDrawerOpen = false} class="px-4 py-2 underline-offset-4 hover:underline">Go to Community</a>
                     </div>
                 {/if}
             </Tabs.Content>
