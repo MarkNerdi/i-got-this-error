@@ -8,23 +8,23 @@
 </script>
 
 <Sheet.Root bind:open={$followersDrawerOpen}>
-  <Sheet.Content side="right" class="flex flex-col px-8">
+  <Sheet.Content side="right" class="flex flex-col px-0">
     <Sheet.Header>
-        <h2 class="text-xl">Followers</h2>
+        <h2 class="text-xl  px-8">Followers</h2>
     </Sheet.Header>
-    <div class="w-full flex-grow flex flex-col space-y-4 py-4">
+    <div class="w-full flex-grow flex flex-col space-y-4 py-4 overflow-hidden">
         <Tabs.Root value="followings" class="h-full flex flex-col space-y-12">
-            <div class="w-full space-between flex items-center">
+            <div class="w-full space-between flex items-center px-8">
                 <Tabs.List class="w-full">
                     <Tabs.Trigger value="followings" class="w-full ">Followings</Tabs.Trigger>
                     <Tabs.Trigger value="followers" class="w-full relative">Followers</Tabs.Trigger>
                 </Tabs.List>
             </div>
-            <Tabs.Content value="followings" class="flex-grow">
+            <Tabs.Content value="followings" class="flex-grow overflow-hidden">
                 {#if $activeUser?.followings?.length}
-                    <div class="flex flex-col lg:gap-6 gap-4 overflow-auto">
+                    <div class="h-full flex flex-col lg:gap-6 gap-4 overflow-auto">
                         {#each $activeUser?.followings ?? [] as following}
-                            <div class="w-full flex flex-row justify-between">
+                            <div class="w-full flex flex-row justify-between px-8">
                                 <div class="w-full flex flex-row items-center">
                                     <Avatar class="size-10">
                                         <AvatarImage src="{following.image}" alt="{following.username}" />
@@ -48,9 +48,9 @@
             </Tabs.Content>
             <Tabs.Content value="followers" class="flex-grow">
                 {#if $activeUser?.followers?.length}
-                    <div class="flex flex-col gap-4 overflow-auto">
+                    <div class="h-full flex flex-col lg:gap-6 gap-4 overflow-auto">
                         {#each $activeUser.followers as follower}
-                            <div class="w-full flex flex-row justify-between">
+                            <div class="w-full flex flex-row justify-between px-8">
                                 <div class="w-full flex flex-row items-center">
                                     <Avatar class="size-10">
                                         <AvatarImage src="{follower.image}" alt="{follower.username}" />
