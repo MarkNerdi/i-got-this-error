@@ -1,12 +1,15 @@
 <script lang="ts">
-    import LoginButton from '$lib/components/LoginButton.svelte';
+    import FollowerDrawer from '$lib/components/FollowerDrawer.svelte';
+import LoginButton from '$lib/components/LoginButton.svelte';
     import SideBarMenu from '$lib/components/SideBarMenu.svelte';
     import UserNav from '$lib/components/UserNav.svelte';
+    import Button from '$lib/components/ui/button/button.svelte';
     import { Input } from '$lib/components/ui/input';
     import { metaTags } from '$lib/constants/metadata.constant';
+    import { followersDrawerOpen } from '$lib/stores/followers-drawer.store';
     import { activeUser } from '$lib/stores/user.store';
     import { isMobile } from '$lib/stores/window.store';
-    import { ExternalLink } from 'lucide-svelte';
+    import { ExternalLink, Users } from 'lucide-svelte';
     import { MetaTags } from 'svelte-meta-tags';
 </script>
 
@@ -42,6 +45,9 @@
             {#if !$activeUser}
                 <LoginButton />
             {:else if !$isMobile}
+                <Button variant="ghost" on:click={() => $followersDrawerOpen = true} >
+                    <Users class="size-5" />
+                </Button>
                 <UserNav user={$activeUser} />
             {/if}
         </div>
@@ -51,6 +57,8 @@
         <slot />
     </main>
 </div>
+
+<FollowerDrawer />
 
 <style lang="postcss">
     header {
