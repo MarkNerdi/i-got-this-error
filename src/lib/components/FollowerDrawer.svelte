@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Users } from 'lucide-svelte';
+    import { ChevronRight, Users } from 'lucide-svelte';
     import * as Sheet from '$lib/components/ui/sheet';
     import { activeUser } from '$lib/stores/user.store';
     import { followersDrawerOpen } from '$lib/stores/followers-drawer.store';
@@ -22,16 +22,24 @@
             </div>
             <Tabs.Content value="followings" class="flex-grow overflow-hidden">
                 {#if $activeUser?.followings?.length}
-                    <div class="h-full flex flex-col lg:gap-6 gap-4 overflow-auto">
+                    <div class="h-full flex flex-col gap-2 overflow-auto">
                         {#each $activeUser?.followings ?? [] as following}
-                            <div class="w-full flex flex-row justify-between px-8">
-                                <div class="w-full flex flex-row items-center">
-                                    <Avatar class="size-10">
-                                        <AvatarImage src="{following.image}" alt="{following.username}" />
-                                        <AvatarFallback>SC</AvatarFallback>
-                                    </Avatar>
-                                    <h3 class="text-base ml-4">{following.username}</h3>
-                                </div>
+                            <div class="w-full px-6">
+                                <a
+                                    href="/profile/{following.username}"
+                                    class="w-full flex flex-row justify-between items-center hover:bg-secondary p-2 rounded-md"
+                                    on:click={() => $followersDrawerOpen = false}
+                                    data-sveltekit-preload-data="hover"
+                                >
+                                    <div class="w-full flex flex-row items-center">
+                                        <Avatar class="size-10">
+                                            <AvatarImage src="{following.image}" alt="{following.username}" />
+                                            <AvatarFallback>SC</AvatarFallback>
+                                        </Avatar>
+                                        <h3 class="text-base ml-4">{following.username}</h3>
+                                    </div>
+                                    <ChevronRight class="size-6" />
+                                </a>
                             </div>
                         {/each}
                     </div>
@@ -48,16 +56,23 @@
             </Tabs.Content>
             <Tabs.Content value="followers" class="flex-grow">
                 {#if $activeUser?.followers?.length}
-                    <div class="h-full flex flex-col lg:gap-6 gap-4 overflow-auto">
+                    <div class="h-full flex flex-col gap-2 overflow-auto">
                         {#each $activeUser.followers as follower}
-                            <div class="w-full flex flex-row justify-between px-8">
-                                <div class="w-full flex flex-row items-center">
-                                    <Avatar class="size-10">
-                                        <AvatarImage src="{follower.image}" alt="{follower.username}" />
-                                        <AvatarFallback>SC</AvatarFallback>
-                                    </Avatar>
-                                    <h3 class="text-base ml-4">{follower.username}</h3>
-                                </div>
+                            <div class="w-full px-6">
+                                <a
+                                    href="/profile/{follower.username}"
+                                    class="w-full flex flex-row justify-between hover:bg-secondary p-2 rounded-md"
+                                    on:click={() => $followersDrawerOpen = false}
+                                    data-sveltekit-preload-data="hover"
+                                >
+                                    <div class="w-full flex flex-row items-center">
+                                        <Avatar class="size-10">
+                                            <AvatarImage src="{follower.image}" alt="{follower.username}" />
+                                            <AvatarFallback>SC</AvatarFallback>
+                                        </Avatar>
+                                        <h3 class="text-base ml-4">{follower.username}</h3>
+                                    </div>
+                                </a>
                             </div>
                         {/each}
                     </div>
