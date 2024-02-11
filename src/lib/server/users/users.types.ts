@@ -4,6 +4,8 @@ export type UserModel = {
     _id?: ObjectId | string;
     name?: string | null;
     email?: string | null;
+    
+    githubId?: number
 
     profileUrl: string;
     username: string;

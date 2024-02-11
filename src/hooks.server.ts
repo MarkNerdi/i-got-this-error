@@ -46,6 +46,7 @@ export const handle = SvelteKitAuth({
             profile(profile) {
                 return {
                     id: profile.id.toString(),
+                    githubId: profile.id,
                     email: profile.email,
                     profileUrl: profile.html_url,
                     username: profile.login,

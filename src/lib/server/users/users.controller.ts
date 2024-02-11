@@ -63,6 +63,14 @@ async function getById(id: string): Promise<UserModel | null> {
     return user;
 }
 
+async function getByGithubId(id: number): Promise<UserModel | null> {
+    const user = await userCollection.findOne({ githubId: id });
+    if (user) {
+        user.email = undefined;
+    }
+    return user;
+}
+
 async function addFollowerToUser(followed: UserModel, follower: UserModel): Promise<void> {
     await userCollection.updateOne({ _id: new ObjectId(follower._id) }, {
         $addToSet: {
@@ -102,6 +110,7 @@ export const userController = {
     getById,
     getByUsername,
     getAllUsernames,
+    getByGithubId,
     addFollowerToUser,
     removeFollowerFromUser,
 };
