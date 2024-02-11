@@ -9,7 +9,7 @@ type UserPaginated = {
 };
 
 async function getAllPaginated(page: number, search?: string): Promise<UserPaginated> {
-    const query = {};
+    const query: Record<string, unknown>  = {};
     if (search) {
         query.username = { $regex : search, $options: 'i' };
     }
@@ -28,7 +28,7 @@ async function getAllPaginated(page: number, search?: string): Promise<UserPagin
     ).toArray())?.[0];
 
     if (!paginatedUsers) {
-        return Promise.reject('No users found'); 
+        return Promise.reject('No users found');
     }
 
     return {
@@ -48,26 +48,17 @@ async function getAllUsernames(): Promise<string[]> {
 }
 
 async function getByUsername(username: string): Promise<UserModel | null> {
-    const user = await userCollection.findOne({ username });
-    if (user) {
-        user.email = undefined;
-    }
+    const user = await userCollection.findOne({ username }, { projection: { email: 0 } });
     return user;
 }
 
 async function getById(id: string): Promise<UserModel | null> {
-    const user = await userCollection.findOne({ _id: new ObjectId(id) });
-    if (user) {
-        user.email = undefined;
-    }
+    const user = await userCollection.findOne({ _id: new ObjectId(id) }, { projection: { email: 0 } });
     return user;
 }
 
 async function getByGithubId(id: number): Promise<UserModel | null> {
-    const user = await userCollection.findOne({ githubId: id });
-    if (user) {
-        user.email = undefined;
-    }
+    const user = await userCollection.findOne({ githubId: id }, { projection: { email: 0 } } );
     return user;
 }
 
