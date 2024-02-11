@@ -23,7 +23,7 @@
 <Sheet.Root bind:open>
   <Sheet.Trigger asChild let:builder>
     <Button builders={[builder]} variant="ghost" class="px-0">
-        <Menu class="size-8" />
+        <Menu class="size-7" />
     </Button>
   </Sheet.Trigger>
   <Sheet.Content side="left" class="flex flex-col px-2">

@@ -37,7 +37,7 @@ import LoginButton from '$lib/components/LoginButton.svelte';
                 </div>
             {/if}
         </div>
-        <div class="flex justify-between items-center gap-4">
+        <div class="flex justify-between items-center gap-1">
             <form action="/devs">
                 <input type="hidden" name="page" value="1" />
                 <Input placeholder="Search other devs" name="search" required />
@@ -62,7 +62,7 @@ import LoginButton from '$lib/components/LoginButton.svelte';
 
 <style lang="postcss">
     header {
-        @apply h-[70px] p-4;
+        @apply lg:p-4 py-2 px-4;
         @apply flex justify-between items-center gap-4;
         @apply bg-white dark:bg-black;
         @apply border-b border-solid border-border;
