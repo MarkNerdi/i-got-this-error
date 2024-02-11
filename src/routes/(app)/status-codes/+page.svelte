@@ -133,12 +133,12 @@
     }
 
     header-section {
-        @apply w-full max-w-[1000px] lg:px-6 px-4;
+        @apply w-full max-w-[1200px] lg:px-6 px-4;
         @apply flex lg:flex-row flex-col gap-4 justify-between items-start;
     }
 
     list-container {
-        @apply w-full flex flex-col gap-8 max-w-[1000px] lg:px-6 px-4;
+        @apply w-full flex flex-col gap-8 max-w-[1200px] lg:px-6 px-4;
     }
 
     status-code-list {

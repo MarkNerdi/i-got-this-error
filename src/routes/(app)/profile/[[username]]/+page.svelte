@@ -36,7 +36,7 @@
 <MetaTags {...metaTags} title={isActiveUser ? 'My Profile' : user?.username ?? 'Profile'} />
 
 <profile-view>
-    <div class="w-full max-w-[1000px] flex flex-row justify-between align-center lg:p-6 p-4 pb-0">
+    <div class="w-full max-w-[1200px] flex flex-row justify-between align-center lg:p-6 p-4 pb-0">
         <h2 class="lg:text-3xl font-bold text-xl">{
             isActiveUser
                 ? 'Your Profile'
@@ -152,11 +152,11 @@
     }
 
     progress-section {
-        @apply w-full max-w-[1000px] flex flex-row items-center justify-center lg:gap-16 gap-4 lg:p-12 p-4;
+        @apply w-full max-w-[1200px] flex flex-row items-center justify-center lg:gap-16 gap-4 lg:p-12 p-4;
     }
 
     status-codes-section {
-        @apply w-full max-w-[1000px] flex-grow flex flex-col items-start lg:gap-8 gap-4 lg:p-6 p-4;
+        @apply w-full max-w-[1200px] flex-grow flex flex-col items-start lg:gap-8 gap-4 lg:p-6 p-4;
     }
 
     list-container {
