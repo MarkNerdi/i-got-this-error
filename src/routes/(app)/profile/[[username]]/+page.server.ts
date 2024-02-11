@@ -1,8 +1,6 @@
 import { userController } from '$lib/server/users/users.controller';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { userCollection } from '$lib/server/db';
-import { ObjectId } from 'mongodb';
 import type { UserModel } from '$lib/server/users/users.types.js';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
@@ -55,35 +53,9 @@ export const actions = {
         }
 
         if (follow) {
-            await userCollection.updateOne({ _id: new ObjectId(currentUser._id) }, {
-                $addToSet: {
-                    followings: {
-                        id: new ObjectId(otherUser._id),
-                        username: otherUser.username,
-                        image: otherUser.image,
-                    },
-                },
-            });        
-            await userCollection.updateOne({ _id: new ObjectId(otherUser._id) }, {
-                $addToSet: {
-                    followers: {
-                        id: new ObjectId(currentUser._id),
-                        username: currentUser.username,
-                        image: currentUser.image,
-                    },
-                },
-            });        
+            userController.addFollowerToUser(otherUser, currentUser);
         } else {
-            await userCollection.updateOne({ _id: new ObjectId(currentUser._id) }, {
-                $pull: {
-                    followings: { id: new ObjectId(otherUser._id) },
-                },
-            });        
-            await userCollection.updateOne({ _id: new ObjectId(otherUser._id) }, {
-                $pull: {
-                    followers: { id: new ObjectId(currentUser._id) },
-                },
-            });        
+            userController.removeFollowerFromUser(otherUser, currentUser);
         }
 
         return { success: true };

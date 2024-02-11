@@ -63,9 +63,45 @@ async function getById(id: string): Promise<UserModel | null> {
     return user;
 }
 
+async function addFollowerToUser(followed: UserModel, follower: UserModel): Promise<void> {
+    await userCollection.updateOne({ _id: new ObjectId(follower._id) }, {
+        $addToSet: {
+            followings: {
+                id: new ObjectId(followed._id),
+                username: followed.username,
+                image: followed.image,
+            },
+        },
+    });        
+    await userCollection.updateOne({ _id: new ObjectId(followed._id) }, {
+        $addToSet: {
+            followers: {
+                id: new ObjectId(follower._id),
+                username: follower.username,
+                image: follower.image,
+            },
+        },
+    });    
+}
+
+async function removeFollowerFromUser(followed: UserModel, follower: UserModel): Promise<void> {
+    await userCollection.updateOne({ _id: new ObjectId(follower._id) }, {
+        $pull: {
+            followings: { id: new ObjectId(followed._id) },
+        },
+    });        
+    await userCollection.updateOne({ _id: new ObjectId(followed._id) }, {
+        $pull: {
+            followers: { id: new ObjectId(follower._id) },
+        },
+    });
+}
+
 export const userController = {
     getAllPaginated,
     getById,
     getByUsername,
     getAllUsernames,
+    addFollowerToUser,
+    removeFollowerFromUser,
 };
