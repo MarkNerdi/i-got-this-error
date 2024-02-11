@@ -37,6 +37,16 @@ async function getAllPaginated(page: number, search?: string): Promise<UserPagin
     };
 }
 
+async function getAllUsernames(): Promise<string[]> {
+    const users = await userCollection.aggregate([
+        { $project: { username: 1, _id: 0 } },
+    ]
+    ).toArray();
+    const usernames = users.map(user => user.username) as string[];
+
+    return usernames;
+}
+
 async function getByUsername(username: string): Promise<UserModel | null> {
     const user = await userCollection.findOne({ username });
     if (user) {
@@ -57,4 +67,5 @@ export const userController = {
     getAllPaginated,
     getById,
     getByUsername,
+    getAllUsernames,
 };
