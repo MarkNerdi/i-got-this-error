@@ -39,7 +39,7 @@ export const actions = {
         };
 
         if (user.receivedCodes?.some(receivedCode => receivedCode.code === code)) {
-            await userCollection.updateOne({ _id: user._id }, { $pull: { 'receivedCodes.code': code } });        
+            await userCollection.updateOne({ _id: user._id }, { $pull: { receivedCodes: { code } } });        
             await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        
         } else {
             await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        

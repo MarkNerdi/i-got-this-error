@@ -1,6 +1,7 @@
 <script lang="ts">
+    import AddStatusCodePopup from '$lib/components/AddStatusCodePopup.svelte';
     import FollowerDrawer from '$lib/components/FollowerDrawer.svelte';
-import LoginButton from '$lib/components/LoginButton.svelte';
+    import LoginButton from '$lib/components/LoginButton.svelte';
     import SideBarMenu from '$lib/components/SideBarMenu.svelte';
     import UserNav from '$lib/components/UserNav.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
@@ -59,6 +60,7 @@ import LoginButton from '$lib/components/LoginButton.svelte';
 </div>
 
 <FollowerDrawer />
+<AddStatusCodePopup />
 
 <style lang="postcss">
     header {

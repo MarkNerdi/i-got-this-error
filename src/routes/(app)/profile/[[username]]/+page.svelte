@@ -12,6 +12,7 @@
     import { metaTags } from '$lib/constants/metadata.constant.js';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { STATUS_CODES } from '$lib/constants/status-codes.constant.js';
+    import { pushState } from '$app/navigation';
 
     export let data;
 
@@ -31,6 +32,13 @@
 
     let newestStatusCodes: ReceivedCode[] = [];
     $: newestStatusCodes = user?.receivedCodes.sort((a, b) => b.receivedAt - a.receivedAt).slice(0, 5) ?? [];
+
+
+    function showCodeModal(code: string) {
+        pushState('', {
+            displayedCode: code,
+        });
+    }
 </script>
 
 <MetaTags {...metaTags} title={isActiveUser ? 'My Profile' : user?.username ?? 'Profile'} />
@@ -96,9 +104,7 @@
                 <status-code-list>
                     {#each newestStatusCodes as statusCode}
                         {#if isActiveUser}
-                            <AddStatusCodePopup code={statusCode.code} receivedStatusCode={statusCode} >
-                                <StatusCodeCard code={statusCode.code} />
-                            </AddStatusCodePopup>
+                            <StatusCodeCard code={statusCode.code} on:click={() => showCodeModal(statusCode.code)}/>
                         {:else}
                             {@const isReceivedByActiveUser = $activeUser?.receivedCodes.some(code => code.code === statusCode.code)}
                             <StatusCodeCard code={statusCode.code} {isReceivedByActiveUser} hoverAnimation={false} />
@@ -118,9 +124,7 @@
                         <status-code-list>
                             {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
                                 {#if isActiveUser}
-                                    <AddStatusCodePopup code={statusCode.code} receivedStatusCode={statusCode} >
-                                        <StatusCodeCard code={statusCode.code} />
-                                    </AddStatusCodePopup>
+                                    <StatusCodeCard code={statusCode.code} on:click={() => showCodeModal(statusCode.code)}/>
                                 {:else}
                                     {@const isReceivedByActiveUser = $activeUser?.receivedCodes.some(code => code.code === statusCode.code)}
                                     <StatusCodeCard code={statusCode.code} {isReceivedByActiveUser} hoverAnimation={false} />

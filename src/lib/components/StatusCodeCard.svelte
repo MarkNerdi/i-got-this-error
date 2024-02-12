@@ -8,7 +8,7 @@
     export let hoverAnimation: boolean = true;
 </script>
 
-<Card class="relative h-full flex flex-col lg:gap-2 gap-1 justify-center items-center lg:p-6 p-4 {hoverAnimation ? 'hover:bg-secondary cursor-pointer' : ''}">
+<Card class="relative h-full flex flex-col lg:gap-2 gap-1 justify-center items-center lg:p-6 p-4 {hoverAnimation ? 'hover:bg-secondary cursor-pointer' : ''}" on:click>
     <h3 class="lg:text-2xl text-xl">{code}</h3>
     <p class="lg:text-sm text-xs text-muted-foreground text-center">{STATUS_CODES[code]?.title}</p>
     {#if !!isReceivedByActiveUser}

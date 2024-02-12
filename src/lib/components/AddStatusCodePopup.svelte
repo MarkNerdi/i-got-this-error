@@ -13,24 +13,25 @@
     import { Toggle } from '$lib/components/ui/toggle';
     import Textarea from '$lib/components/ui/textarea/textarea.svelte';
     import { invalidateAll } from '$app/navigation';
+    import { page } from '$app/stores';
 
-    export let code: string;
     export let receivedStatusCode: ReceivedCode | undefined = undefined;
-
+    
     let editMode = false;
-    let open = false;
+    
+    $: code = $page.state.displayedCode;
+    $: open = !!code;
 </script>
 
-<Dialog.Root bind:open>
-    <Dialog.Trigger >
-        <slot />
-    </Dialog.Trigger>
+<Dialog.Root bind:open onOpenChange={() => open && history.back()}>
     <Dialog.Content class="sm:max-w-[425px]">
-        <form method="POST" use:enhance={() => {
+        <form method="POST" action="/status-codes" use:enhance={() => {
             return async ({ result }) => {
                 if (result.type === 'success') {
                     invalidateAll();
-                    open = false;
+                    console.log('sadasdas');
+                    
+                    history.back();
                 } else {
                     await applyAction(result);
                 }
@@ -58,9 +59,9 @@
                         {#if editMode}
                             <Label >Let everyone know how you got this one:</Label>
                             <Textarea name="note" class="col-span-3" />
-                        {:else}
+                        {:else if receivedStatusCode.note}
                             <Label >How you described this one:</Label>
-                            <p class="text-sm text-muted-foreground">{receivedStatusCode.note ?? 'No comment'}</p>
+                            <p class="text-sm text-muted-foreground">{receivedStatusCode.note}</p>
                         {/if}
                     </div>
                 {:else}

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { pushState } from '$app/navigation';
     import AddStatusCodePopup from '$lib/components/AddStatusCodePopup.svelte';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { Input } from '$lib/components/ui/input/index.js';
@@ -48,8 +49,11 @@
         return statusCode.code.toLowerCase().includes(searchTerm.toLowerCase()) || STATUS_CODES[statusCode.code]?.title.toLowerCase().includes(searchTerm.toLowerCase());
     }
 
-    $: console.log(showFilter);
-    
+    function showCodeModal(code: string) {
+        pushState('', {
+            displayedCode: code,
+        });
+    }
 </script>
 
 
@@ -105,9 +109,7 @@
                         <status-code-list>
                             {#each groupedStatusCodes[statusCodesGroupKey] as statusCode}
                                 {@const code = $activeUser?.receivedCodes.find(code => code.code === statusCode.code)}
-                                <AddStatusCodePopup code={statusCode.code} receivedStatusCode={code} >
-                                    <StatusCodeCard code={statusCode.code} isReceivedByActiveUser={!!code} />
-                                </AddStatusCodePopup>
+                                <StatusCodeCard code={statusCode.code} on:click={() => showCodeModal(statusCode.code)} isReceivedByActiveUser={!!code} />
                             {/each}
                         </status-code-list>
                     </div>
