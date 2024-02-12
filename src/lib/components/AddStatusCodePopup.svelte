@@ -20,6 +20,7 @@
     let editMode = false;
     
     $: code = $page.state.displayedCode;
+    $: receivedStatusCode = $activeUser?.receivedCodes.find((c) => c.code === code);
     $: open = !!code;
 </script>
 
@@ -38,12 +39,12 @@
             };
         }}>
             <Dialog.Header>
-                <Dialog.Title>Did you get this status code?</Dialog.Title>
+                <Dialog.Title>{receivedStatusCode ? 'Congratz on this one!' : 'Did you get this status code?'}</Dialog.Title>
                 <Dialog.Description>
-                    Tick it off your list!
+                    {receivedStatusCode ? '' : 'Tick it off your list!'}
                 </Dialog.Description>
             </Dialog.Header>
-            <div class="relative flex flex-col items-center gap-8 py-4">
+            <div class="relative flex flex-col items-center gap-8 lg:py-8 py-4">
                 <Card class="size-[120px] flex flex-col items-center justify-center p-6">
                     <h3 class="text-2xl">{code}</h3>
                     <p class="text-sm text-center">{STATUS_CODES[code]?.title}</p>
@@ -55,15 +56,17 @@
                         <Pencil class="size-4" />
                     </Toggle>
 
-                    <div class="w-full flex flex-col gap-2">
-                        {#if editMode}
+                    {#if editMode}
+                        <div class="w-full flex flex-col gap-2">
                             <Label >Let everyone know how you got this one:</Label>
                             <Textarea name="note" class="col-span-3" />
-                        {:else if receivedStatusCode.note}
+                        </div>
+                    {:else if receivedStatusCode.note}
+                        <div class="w-full flex flex-col gap-2">
                             <Label >How you described this one:</Label>
                             <p class="text-sm text-muted-foreground">{receivedStatusCode.note}</p>
-                        {/if}
-                    </div>
+                        </div>
+                    {/if}
                 {:else}
                     {#if $activeUser}
                         <div class="w-full flex flex-col gap-2">
