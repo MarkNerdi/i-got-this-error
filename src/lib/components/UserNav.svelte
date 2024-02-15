@@ -2,17 +2,17 @@
     import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
     import { Button } from '$lib/components/ui/button';
     import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '$lib/components/ui/dropdown-menu';
-    import type { User } from '$lib/server/users/users.types';
+    import type { UserModel } from '$lib/server/users/users.types';
     import { signOut } from '@auth/sveltekit/client';
     import { toggleMode } from 'mode-watcher';
 
-    export let user: User;
+    export let user: UserModel;
     export let expanded: boolean = false;
 </script>
 
 <DropdownMenu>
 	<DropdownMenuTrigger asChild let:builder>
-		<Button variant="ghost" builders={[builder]} class="relative">
+		<Button variant="ghost" builders={[builder]} class="relative lg:p-0 lg:rounded-full">
             <div class="flex flex-row items-center gap-4">
                 <Avatar class="size-8">
                     <AvatarImage src="{user.image}" alt="{user.username}" />
