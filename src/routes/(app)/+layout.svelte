@@ -38,7 +38,7 @@
                 </div>
             {/if}
         </div>
-        <div class="flex justify-between items-center gap-1">
+        <div class="flex justify-between items-center gap-2">
             <form action="/devs">
                 <input type="hidden" name="page" value="1" />
                 <Input placeholder="Search other devs" name="search" required />

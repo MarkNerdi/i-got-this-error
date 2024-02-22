@@ -13,8 +13,8 @@ export type UserModel = {
 
     receivedCodes: ReceivedCode[];
 
-    followers: OtherUser[];
-    followings: OtherUser[];
+    followers: number[]; // githubId[]
+    followings: number[]; // githubId[]
 
     createdAt: number;
 };
@@ -23,10 +23,4 @@ export type ReceivedCode = {
     code: string;
     note: string;
     receivedAt: number;
-}
-
-export type OtherUser = {
-    id: ObjectId | string;
-    username: string;
-    image: string;
 }

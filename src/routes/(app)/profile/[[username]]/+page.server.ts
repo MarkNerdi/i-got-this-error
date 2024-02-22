@@ -2,6 +2,7 @@ import { userController } from '$lib/server/users/users.controller';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { UserModel } from '$lib/server/users/users.types.js';
+import { userCollection } from '$lib/server/db.js';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
     const session = await locals.getSession();
@@ -20,14 +21,17 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         return fail(404);
     }
 
+    const amountFollowers: number = await userCollection.find({ followers: user.githubId }).count();
+    const amountFollowings: number = await userCollection.find({ followers: user.githubId }).count();
+
     const serializedUser = {
         profileUrl: user.profileUrl,
         username: user.username,
         image: user.image,
-        isFollowed: currentUser?.followings?.some(following => following.id.toString() === user._id?.toString()),
+        isFollowed: currentUser?.followings?.some(following => following === user.githubId),
         receivedCodes: user.receivedCodes ?? [],
-        amountFollowers: user.followers?.length ?? 0,
-        amountFollowings: user.followings?.length ?? 0,
+        amountFollowers,
+        amountFollowings,
     };
     return { user: serializedUser };
 };

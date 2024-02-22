@@ -6,8 +6,9 @@ import {
     PRIVATE_DB_NAME,
     AUTH_SECRET
 } from '$env/static/private';
-import { mongoClient } from '$lib/server/db';
+import { mongoClient, userCollection } from '$lib/server/db';
 import GitHub, { type GitHubEmail } from '@auth/core/providers/github';
+import { userController } from '$lib/server/users/users.controller';
 
 export const handle = SvelteKitAuth({
     providers: [
@@ -44,6 +45,27 @@ export const handle = SvelteKitAuth({
                 },
             },
             profile(profile) {
+                console.log(profile);
+
+                const [followingUrl ] = profile.following_url.split('{');
+
+                fetch(followingUrl).then(async (res) => {
+                    const followings = await res.json();
+                    followings.forEach((following: { id: number }) => {
+                        const githubId = following.id;
+                        userController.addFollowerToUserByGithubIds(githubId, profile.id);
+                    });
+                });
+                const [followersUrl ] = profile.followers_url.split('{');
+                
+                fetch(followersUrl).then(async (res) => {
+                    const followers = await res.json();
+                    followers.forEach((following: { id: number }) => {
+                        const githubId = following.id;
+                        userController.addFollowerToUserByGithubIds(profile.id, githubId);
+                    });
+                });
+                
                 return {
                     id: profile.id.toString(),
                     githubId: profile.id,

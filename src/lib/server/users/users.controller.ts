@@ -62,23 +62,27 @@ async function getByGithubId(id: number): Promise<UserModel | null> {
     return user;
 }
 
+async function addFollowerToUserByGithubIds(followed: number, follower: number): Promise<void> {
+    await userCollection.updateOne({ githubId: follower }, {
+        $addToSet: {
+            followings: followed,
+        },
+    });        
+    await userCollection.updateOne({ githubId: followed }, {
+        $addToSet: {
+            followers: follower,
+        },
+    });    
+}
 async function addFollowerToUser(followed: UserModel, follower: UserModel): Promise<void> {
     await userCollection.updateOne({ _id: new ObjectId(follower._id) }, {
         $addToSet: {
-            followings: {
-                id: new ObjectId(followed._id),
-                username: followed.username,
-                image: followed.image,
-            },
+            followings: followed.githubId,
         },
     });        
     await userCollection.updateOne({ _id: new ObjectId(followed._id) }, {
         $addToSet: {
-            followers: {
-                id: new ObjectId(follower._id),
-                username: follower.username,
-                image: follower.image,
-            },
+            followers: follower.githubId,
         },
     });    
 }
@@ -86,12 +90,12 @@ async function addFollowerToUser(followed: UserModel, follower: UserModel): Prom
 async function removeFollowerFromUser(followed: UserModel, follower: UserModel): Promise<void> {
     await userCollection.updateOne({ _id: new ObjectId(follower._id) }, {
         $pull: {
-            followings: { id: new ObjectId(followed._id) },
+            followings: followed.githubId,
         },
     });        
     await userCollection.updateOne({ _id: new ObjectId(followed._id) }, {
         $pull: {
-            followers: { id: new ObjectId(follower._id) },
+            followers: follower.githubId,
         },
     });
 }
@@ -102,6 +106,7 @@ export const userController = {
     getByUsername,
     getAllUsernames,
     getByGithubId,
+    addFollowerToUserByGithubIds,
     addFollowerToUser,
     removeFollowerFromUser,
 };
