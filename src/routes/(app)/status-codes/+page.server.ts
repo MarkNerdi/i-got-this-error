@@ -45,7 +45,6 @@ export const actions = {
             await userCollection.updateOne({ _id: user._id }, { $push: { receivedCodes: receivedStatusCode } });        
             await statusCodeController.addReceiver(code, user._id?.toString());        
         }
-        
 
         return receivedStatusCode;
     },

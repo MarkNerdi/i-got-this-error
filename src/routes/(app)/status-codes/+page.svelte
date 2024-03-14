@@ -1,6 +1,5 @@
 <script lang="ts">
     import { pushState } from '$app/navigation';
-    import AddStatusCodePopup from '$lib/components/AddStatusCodePopup.svelte';
     import StatusCodeCard from '$lib/components/StatusCodeCard.svelte';
     import { Input } from '$lib/components/ui/input/index.js';
     import { ToggleGroup, ToggleGroupItem } from '$lib/components/ui/toggle-group';

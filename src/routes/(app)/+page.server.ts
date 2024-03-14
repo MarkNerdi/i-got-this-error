@@ -3,7 +3,6 @@ import { statusCodeController } from '$lib/server/status/status-code.controller'
 import { getDateAsNumber } from '$lib/utils/general';
 import type { PageServerLoad } from './$types';
 import type { UserModel } from '$lib/server/users/users.types';
-import { ObjectId } from 'mongodb';
 
 type FeedEntry = {
     username: string;
@@ -34,9 +33,9 @@ export const load: PageServerLoad = async ({ locals }) => {
     let feed: FeedEntry[] = [];
     const currentUser = session?.user as UserModel | undefined;
     if (currentUser) {
-        const followingIds = currentUser.followings?.map(following => new ObjectId(following.id));
+        const followingIds = currentUser.followings;
         feed = await userCollection.aggregate([
-            { $match : { _id: { $in: followingIds } } },
+            { $match : { githubId: { $in: followingIds } } },
             { $project: { _id: 0, username: 1, image: 1, receivedCodes: 1 } },
             { $unwind : '$receivedCodes' },
             { $sort : { 'receivedCodes.receivedAt' : -1 } },

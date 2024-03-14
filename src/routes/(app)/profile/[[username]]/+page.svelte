@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Card } from '$lib/components/ui/card';
-    import AddStatusCodePopup from '$lib/components/AddStatusCodePopup.svelte';
     import Button from '$lib/components/ui/button/button.svelte';
     import { activeUser } from '$lib/stores/user.store.js';
     import { goToExternalLink } from '$lib/utils/general.js';
